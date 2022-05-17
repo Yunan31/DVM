@@ -1,12 +1,9 @@
-
-import java.util.*;
-
-public class System {
+public class VM {
 
     /**
      * Default constructor
      */
-    public System(){
+    public VM(){
         isValid = false;
         position = new int[100][100];
         isNone = false;
@@ -124,12 +121,7 @@ public class System {
         // TODO implement here
         return null;
     }
-
-
-    public void Operation1() {
-        // TODO implement here
-    }
-
+    
 
     private void getCountMsg(int code, int count) {
         // TODO implement here
