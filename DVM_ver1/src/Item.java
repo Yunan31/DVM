@@ -1,161 +1,81 @@
-//
-//import java.util.*;
-//
-///**
-// *
-// */
-//public class Item {
-//
-//    /**
-//     * Default constructor
-//     */
-//    public Item() {
-//    }
-//
-//    /**
-//     *
-//     */
-//    private Integer vmid[];
-//
-//    /**
-//     *
-//     */
-//    private Integer mid;
-//
-//    /**
-//     *
-//     */
-//    private Integer cardNum;
-//
-//    /**
-//     *
-//     */
-//    private Integer cardBalance;
-//
-//    /**
-//     *
-//     */
-//    private Integer item[];
-//
-//    /**
-//     *
-//     */
-//    private Boolean isNone;
-//
-//    /**
-//     *
-//     */
-//    private void authCode<K,V> : Map;
-//
-//    /**
-//     *
-//     */
-//    private Boolean isValid;
-//
-//    /**
-//     * @param int mid
-//     * @return
-//     */
-//    public void setMid(void int mid) {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @param int vmid
-//     * @return
-//     */
-//    public void setVmid(void int vmid) {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @param int cardNum
-//     * @param int cardBalance
-//     * @return
-//     */
-//    public void setCard(void int cardNum, void int cardBalance) {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @param int code
-//     * @param int count
-//     * @return
-//     */
-//    public void setItem(void int code, void int count) {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @param int code
-//     * @param int count
-//     * @return
-//     */
-//    public Boolean checkItemStock(void int code, void int count) {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @param int code
-//     * @param int count
-//     * @param string authCode
-//     * @return
-//     */
-//    public void insertAuthCode(void int code, void int count, void string authCode) {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @param int code
-//     * @param int count
-//     * @return
-//     */
-//    public void updateItemStock(void int code, void int count) {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @param int cardNum
-//     * @return
-//     */
-//    public Boolean checkCard(void int cardNum) {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @param string authCode
-//     * @return
-//     */
-//    public Boolean checkAuthCode(void string authCode) {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @param string authCode
-//     * @return
-//     */
-//    public void deleteAuthCode(void string authCode) {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @param int code
-//     * @param int count
-//     * @return
-//     */
-//    public void update(void int code, void int count) {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//}
+
+import java.util.*;
+
+/**
+ *
+ */
+public class Item {
+
+    /**
+     * Default constructor
+     */
+    public Item() {
+    }
+
+    private int vmid[];
+    private int mid;
+    private int cardNum;
+    private int cardBalance;
+    private int item[];
+    private boolean isNone;
+    private HashMap<Integer, String> authCode;
+    private boolean isValid;
+
+
+    public void setMid(int mid) {
+        // TODO implement here
+    }
+
+
+    public void setVmid(int vmid) {
+        // TODO implement here
+    }
+
+
+    public void setCard(int cardNum, int cardBalance) {
+        // TODO implement here
+    }
+
+
+    public void setItem(int code, int count) {
+        // TODO implement here
+    }
+
+
+    public boolean checkItemStock(int code, int count) {
+        // TODO implement here
+        return false;
+    }
+
+
+    public void insertAuthCode(int code, int count, String authCode) {
+        // TODO implement here
+    }
+
+
+    public void updateItemStock(int code, int count) {
+        // TODO implement here
+    }
+
+
+    public boolean checkCard(int cardNum) {
+        // TODO implement here
+        return false;
+    }
+
+
+    public boolean checkAuthCode(String authCode) {
+        // TODO implement here
+        return false;
+    }
+
+
+    public void deleteAuthCode(String authCode) {
+        // TODO implement here
+    }
+
+
+    public void update(int code, int count) {
+        // TODO implement here
+    }
+}

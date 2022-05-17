@@ -1,397 +1,230 @@
-//
-//import java.util.*;
-//
-///**
-// *
-// */
-//public class System {
-//
-//    /**
-//     * Default constructor
-//     */
-//    public System() {
-//    }
-//
-//    /**
-//     *
-//     */
-//    private Boolean isValid;
-//
-//    /**
-//     *
-//     */
-//    private Integer position[][];
-//
-//    /**
-//     *
-//     */
-//    private Boolean isNone;
-//
-//    /**
-//     *
-//     */
-//    private String authCode;
-//
-//    /**
-//     * @param int code
-//     * @param int count
-//     * @return
-//     */
-//    private void selectItem(void int code, void int count) {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @return
-//     */
-//    private void showMenu() {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @return
-//     */
-//    private void getPrepayment() {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @return
-//     */
-//    private void readAuthenticationCode() {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @return
-//     */
-//    private void managerAccess() {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @return
-//     */
-//    private void showInputManagerAuthCode() {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @param int code
-//     * @return
-//     */
-//    private Boolean checkManagerAccess(void int code) {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @return
-//     */
-//    private void showSetUp() {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @param int vmid
-//     * @return
-//     */
-//    private void setVmid(void int vmid) {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @param int mid
-//     * @return
-//     */
-//    private void setMid(void int mid) {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @param int cardNum
-//     * @param int cardBalance
-//     * @return
-//     */
-//    private void setCard(void int cardNum, void int cardBalance) {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @return
-//     */
-//    private void done() {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @return
-//     */
-//    private void selectMode() {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @param int code
-//     * @param int count
-//     * @return
-//     */
-//    private Boolean checkItemStock(void int code, void int count) {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @param int xPos
-//     * @param int yPos
-//     */
-//    private void guideOtherMachine(void int xPos, void int yPos) {
-//        // TODO implement here
-//    }
-//
-//    /**
-//     * @param int code
-//     * @param int count
-//     */
-//    private void normalPayment(void int code, void int count) {
-//        // TODO implement here
-//    }
-//
-//    /**
-//     * @return
-//     */
-//    private void cancel() {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @return
-//     */
-//    private void reset() {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @param int type
-//     * @param int code
-//     * @param int count
-//     */
-//    private void msgRequest(void int type, void int code, void int count) {
-//        // TODO implement here
-//    }
-//
-//    /**
-//     * []
-//     * @param int type
-//     * @param int code
-//     * @param int xPos
-//     * @param int yPos
-//     */
-//    private void msgReturn(void int type, void int code, void int xPos, void int yPos) {
-//        // TODO implement here
-//    }
-//
-//    /**
-//     * @return
-//     */
-//    private Integer Array findNearVm() {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     *
-//     */
-//    public void Operation1() {
-//        // TODO implement here
-//    }
-//
-//    /**
-//     * @param int code
-//     * @param int count
-//     * @return
-//     */
-//    private void getCountMsg(void int code, void int count) {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @param int code
-//     * @param int count
-//     * @param int xPos
-//     * @param int yPos
-//     * @return
-//     */
-//    private void returnCountMsg(void int code, void int count, void int xPos, void int yPos) {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @param int code
-//     * @param int count
-//     * @param string authCode
-//     * @return
-//     */
-//    private void getPrePayMsg(void int code, void int count, void string authCode) {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @param int code
-//     * @param int count
-//     * @param string authCode
-//     * @return
-//     */
-//    private void insertAuthCode(void int code, void int count, void string authCode) {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @param int code
-//     * @param int count
-//     * @return
-//     */
-//    private void getItemSaleMsg(void int code, void int count) {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @param int code
-//     * @param int xPos
-//     * @param int yPos
-//     * @return
-//     */
-//    private void returnItemsSaleCheckMsg(void int code, void int xPos, void int yPos) {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @return
-//     */
-//    private void showOtherVm() {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @return
-//     */
-//    private void prePayment() {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @return
-//     */
-//    private void requestCard() {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @param int cardNum
-//     * @return
-//     */
-//    private Boolean checkCard(void int cardNum) {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @return
-//     */
-//    private String createAuthCode() {
-//        // TODO implement here
-//        return "";
-//    }
-//
-//    /**
-//     * @param string authCode
-//     * @return
-//     */
-//    private void showAuthcode(void string authCode) {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @return
-//     */
-//    private void showInputPreAuthcode() {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @param string authCode
-//     * @return
-//     */
-//    private Boolean checkAuthCode(void string authCode) {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @return
-//     */
-//    private void showManagingVm() {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @return
-//     */
-//    private void setup() {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @return
-//     */
-//    private void manageStock() {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @return
-//     */
-//    private void showManageStock() {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//    /**
-//     * @param int code
-//     * @param int count
-//     * @return
-//     */
-//    private void update(void int code, void int count) {
-//        // TODO implement here
-//        return null;
-//    }
-//
-//}
+
+import java.util.*;
+
+public class System {
+
+    /**
+     * Default constructor
+     */
+    public System(){
+        isValid = false;
+        position = new int[100][100];
+        isNone = false;
+    }
+
+    private boolean isValid;
+    private int position[][];
+    private boolean isNone;
+    private String authCode;
+
+
+    private void selectItem(int code, int count) {
+        // TODO implement here
+    }
+
+
+    private void showMenu() {
+        // TODO implement here
+    }
+
+
+    private void getPrepayment() {
+        // TODO implement here
+    }
+
+
+    private void readAuthenticationCode() {
+        // TODO implement here
+    }
+
+
+    private void managerAccess() {
+        // TODO implement here
+    }
+
+
+    private void showInputManagerAuthCode() {
+        // TODO implement here
+    }
+
+
+    private boolean checkManagerAccess(int code) {
+        // TODO implement here
+        return false;
+    }
+
+
+    private void showSetUp() {
+        // TODO implement here
+    }
+
+
+    private void setVmid(int vmid) {
+        // TODO implement here
+    }
+
+
+    private void setMid(int mid) {
+        // TODO implement here
+    }
+
+
+    private void setCard(int cardNum, int cardBalance) {
+        // TODO implement here
+    }
+
+
+    private void done() {
+        // TODO implement here
+    }
+
+
+    private void selectMode() {
+        // TODO implement here
+    }
+
+
+    private boolean checkItemStock(int code, int count) {
+        // TODO implement here
+        return false;
+    }
+
+
+    private void guideOtherMachine(int xPos, int yPos) {
+        // TODO implement here
+    }
+
+
+    private void normalPayment(int code, int count) {
+        // TODO implement here
+    }
+
+
+    private void cancel() {
+        // TODO implement here
+    }
+
+
+    private void reset() {
+        // TODO implement here
+    }
+
+
+    private void msgRequest(int type, int code, int count) {
+        // TODO implement here
+    }
+
+
+    private void msgReturn(int type, int code, int xPos, int yPos) {
+        // TODO implement here
+    }
+
+
+    private int[][] findNearVm() {
+        // TODO implement here
+        return null;
+    }
+
+
+    public void Operation1() {
+        // TODO implement here
+    }
+
+
+    private void getCountMsg(int code, int count) {
+        // TODO implement here
+    }
+
+
+    private void returnCountMsg(int code, int count, int xPos, int yPos) {
+        // TODO implement here
+    }
+
+
+    private void getPrePayMsg(int code, int count, String authCode) {
+        // TODO implement here
+    }
+
+
+    private void insertAuthCode(int code, int count, String authCode) {
+        // TODO implement here
+    }
+
+
+    private void getItemSaleMsg(int code, int count) {
+        // TODO implement here
+    }
+
+
+    private void returnItemsSaleCheckMsg(int code, int xPos, int yPos) {
+        // TODO implement here
+    }
+
+
+    private void showOtherVm() {
+        // TODO implement here
+    }
+
+
+    private void prePayment() {
+        // TODO implement here
+    }
+
+
+    private void requestCard() {
+        // TODO implement here
+    }
+
+
+    private boolean checkCard(int cardNum) {
+        // TODO implement here
+        return false;
+    }
+
+
+    private String createAuthCode() {
+        // TODO implement here
+        return "";
+    }
+
+
+    private void showAuthcode(String authCode) {
+        // TODO implement here
+    }
+
+
+    private void showInputPreAuthcode() {
+        // TODO implement here
+    }
+
+
+    private boolean checkAuthCode(String authCode) {
+        // TODO implement here
+        return false;
+    }
+
+
+    private void showManagingVm() {
+        // TODO implement here
+    }
+
+
+    private void setup() {
+        // TODO implement here
+    }
+
+
+    private void manageStock() {
+        // TODO implement here
+    }
+
+
+    private void showManageStock() {
+        // TODO implement here
+    }
+
+
+    private void update(int code, int count) {
+        // TODO implement here
+    }
+}
