@@ -15,7 +15,7 @@ class dvm_gui extends JFrame {
         JButton selectMode_prepay_btn = new JButton("선결제 수령");
         JButton selectMode_manager_btn = new JButton("매니저");
 
-        selectMode_item_btn.addActionListener(new ActionListener() {
+        selectMode_item_btn.addActionListener(new ActionListener() { //음료 선택
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFrame selectItem = new selectItem();
@@ -25,7 +25,7 @@ class dvm_gui extends JFrame {
             }
         });
 
-        selectMode_prepay_btn.addActionListener(new ActionListener() {
+        selectMode_prepay_btn.addActionListener(new ActionListener() { //선결제 수령
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFrame readPrepayAuthCode = new readPrepayAuthCode();
@@ -35,7 +35,7 @@ class dvm_gui extends JFrame {
             }
         });
 
-        selectMode_manager_btn.addActionListener(new ActionListener() {
+        selectMode_manager_btn.addActionListener(new ActionListener() { //매니져 접근
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFrame readManagerAuthCode = new readManagerAuthCode();
