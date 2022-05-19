@@ -1,3 +1,6 @@
+import DVM_Client.DVMClient;
+import Model.Message;
+
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 public class Main {

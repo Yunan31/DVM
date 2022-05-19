@@ -14,6 +14,8 @@ public class Item {
 
     private List<Integer> vmid; //int [] => list<int>로 형변환
     private int mid;
+    private int xPos = 5; //새로이 추가된 두 위아래 좌표놈들. setup에서 초기화 안해주므로 임의로 값 집어넣음.
+    private int yPos = 10; //이하동문.
     private int cardNum;
     private int cardBalance;
     private int itemCount[]= new int[20]; //기본 int item[]을 사이즈 20으로 고정 선언, 변수명 변경 (itemPrice에 맞춰서 item => itemCount로)
@@ -26,6 +28,17 @@ public class Item {
                                              //즉 authcode를 키값으로 찾을것임.
     private boolean isValid;
 
+    public List<Integer> getVMId(){ //msgRequest에 쓰이므로 get추가.
+        return this.vmid;
+    }
+
+    public int getXpos(){ //위에 새로이 추가하면서 추가된 놈
+        return this.xPos;
+    }
+
+    public int getyPos(){//위에 새로이 추가하면서 추가된 놈
+        return this.yPos;
+    }
 
     public void setMid(int mid) {
         // TODO implement here
