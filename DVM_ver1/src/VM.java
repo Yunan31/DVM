@@ -1,8 +1,10 @@
 import DVM_Client.DVMClient;
+import DVM_Server.DVMServer;
 import GsonConverter.Serializer;
 import Model.Message;
 
 import java.util.List;
+import java.util.Random;
 
 public class VM extends dvm_gui{
 
@@ -182,9 +184,34 @@ public class VM extends dvm_gui{
     }
 
 
-    private int[][] findNearVm() {
+    private int[] findNearVm(String msgType) { //msgList의 여러 type들 중 필요한 type의 값만 가져와야 하므로 String 인자 추가.
+                                                //그리고 반환 타입이 int[][]인데 int[]로 바꿈
         // TODO implement here
-        return null;
+        int dist = 99*99*99*99;
+        String id = "null";
+        int xPos = -1;
+        int yPos = -1;
+        for(int i=0;i< DVMServer.msgList.size();i++){
+            if(DVMServer.msgList.get(i).getMsgType().equals(msgType)){
+                int xDiff=DVMServer.msgList.get(i).getMsgDescription().getDvmXCoord()-item.getXpos();
+                int yDiff=DVMServer.msgList.get(i).getMsgDescription().getDvmYCoord()-item.getyPos();
+                if(xDiff*xDiff*yDiff*yDiff<dist){
+                    dist = xDiff*xDiff*yDiff*yDiff;
+                    id = DVMServer.msgList.get(i).getDstID();
+                    xPos = DVMServer.msgList.get(i).getMsgDescription().getDvmXCoord();
+                    yPos =DVMServer.msgList.get(i).getMsgDescription().getDvmYCoord();
+                }
+            }
+        }
+        if(id.equals("null")){ //요청에 대한 리턴 값이 없음.
+            return null;
+        }
+
+        int[] pos = new int[2]; //넘길 변수 구현.
+        pos[0]=xPos;
+        pos[1]=yPos;
+
+        return pos;
     }
     
 
@@ -205,6 +232,7 @@ public class VM extends dvm_gui{
 
     private void insertAuthCode(int code, int count, String authCode) {
         // TODO implement here
+        item.insertAuthCode(code,count,authCode);
     }
 
 
@@ -233,15 +261,26 @@ public class VM extends dvm_gui{
     }
 
 
-    private boolean checkCard(int cardNum) {
+    private boolean checkCard(int cardNum, int code, int count) { //item에서의 부분과 마찬가지로 인자 축.
         // TODO implement here
-        return false;
+        return item.checkCard(cardNum, code, count);
     }
 
 
     private String createAuthCode() {
         // TODO implement here
-        return "";
+        int leftLimit = 48; // numeral '0'
+        int rightLimit = 122; // letter 'z'
+        int targetStringLength = 10;
+        Random random = new Random();
+
+        String generatedString = random.ints(leftLimit,rightLimit + 1)
+                .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+                .limit(targetStringLength)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
+
+        return generatedString;
     }
 
 
@@ -257,7 +296,7 @@ public class VM extends dvm_gui{
 
     private boolean checkAuthCode(String authCode) {
         // TODO implement here
-        return false;
+        return item.checkAuthCode(authCode);
     }
 
 
@@ -283,5 +322,6 @@ public class VM extends dvm_gui{
 
     private void update(int code, int count) {
         // TODO implement here
+        item.update(code,count);
     }
 }
