@@ -118,44 +118,50 @@ public class VM extends dvm_gui{
                                                                                                 // 3.type string은 추후에 바꿔야함~ 4. 목표 vmID인자로 추가~
                                                                                                 //5. String authCode 인자로 추가.
         // TODO implement here
+        // magType = "StockCheckRequest" or "StockCheckResponse" or "PrepaymentCheck" or "SalesCheckRequest" or "SalesCheckResponse
 
         //이 변수들도 다 추가해야하나...
-        List<Integer> list = item.getVMId();
+        //List<Integer> list = item.getVMId();
 
-        if(type.equals("재고 확인 요청")){ //broadcast로 전부 보내야 함.
-            for(int i=0;i<list.size();i++){ //src, dst를 하나하나 맵핑해서 반복문만큼 요청을 보내도 괜찮나?
-                                            //혹은 src,dst를 안넣고 msgType으로 알아서 구분해서 전체로 보내나? => 이 경우에 src는 필요하긴 할텐데? 그래야 누군지 알고 반환하니까 ㅋㅋ
+        requestMsg(type,code,count,dst,authCode, item.getXpos(), item.getyPos()); //이거 하나로 다 가능해보임. 안돼면 필요 없는 인자갑ㅅ들 ㅣㅂ워주거ㅏㄴ null값으로 바꿔줘야함.
 
-            }
-
-        }
-
-        if(type.equals("선결제 확인")){
-            //전송할 메세지 설정
-            requestMsg(type,code,count,dst,authCode, item.getXpos(), item.getyPos());
-        }
-
-        if(type.equals("음료 판매 확인")){ //얘도 broadcast라 일단 구현 안함.
-
-        }
-
-        if(type.equals("재고 확인 응답")){
-            requestMsg(type,code,count,dst,authCode,item.getXpos(), item.getyPos());
-        }
-
-        if(type.equals("음료 판매 응답")){
-            requestMsg(type,code,count,dst,authCode,item.getXpos(), item.getyPos());
-        }
+//        if(type.equals("재고 확인 요청")){ //broadcast로 전부 보내야 함.
+//            requestMsg(type,code,count,"0",null,0,0); //dst를 0으로 줘서 broadcast를 보냄.
+//
+//        }
+//
+//        if(type.equals("선결제 확인")){
+//            //전송할 메세지 설정
+//            requestMsg(type,code,count,dst,authCode, item.getXpos(), item.getyPos());
+//        }
+//
+//        if(type.equals("음료 판매 확인")){ //얘도 broadcast라 일단 구현 안함.
+//
+//        }
+//
+//        if(type.equals("재고 확인 응답")){
+//            requestMsg(type,code,count,dst,authCode,item.getXpos(), item.getyPos());
+//        }
+//
+//        if(type.equals("음료 판매 응답")){
+//            requestMsg(type,code,count,dst,authCode,item.getXpos(), item.getyPos());
+//        }
     }
 
     private void requestMsg(String type, String code, int count, String dst, String authCode, int xPos, int yPos) throws InterruptedException {
         Message msg = new Message();
         Message.MessageDescription msgDesc = new Message.MessageDescription();
         Serializer msg2json = new Serializer();
-        List<Integer> list = item.getVMId();
+        //List<Integer> list = item.getVMId();
 
-        msg.setSrcId("5"); //우리 Id는 5로 고정 => 얘도 item에 저장하고 가져오는 식으로 해야하나...? (귀찮음 ㅎㅎ)
-        msg.setDstID(dst);
+        if(type.equals("PrepaymentCheck")||type.equals("SalesCheckResponse")){
+            msg.setSrcId(dst); //우리 Id는 5로 고정 => 얘도 item에 저장하고 가져오는 식으로 해야하나...? (귀찮음 ㅎㅎ)
+            msg.setDstID("5");
+        }
+        else{
+            msg.setSrcId("5"); //우리 Id는 5로 고정 => 얘도 item에 저장하고 가져오는 식으로 해야하나...? (귀찮음 ㅎㅎ)
+            msg.setDstID(dst);
+        }
         msg.setMsgType(type);
         msgDesc.setItemCode(code);
         msgDesc.setItemNum(count);
@@ -166,7 +172,7 @@ public class VM extends dvm_gui{
 
         String jsonMsg = msg2json.message2Json(msg); //msg=>json
 
-        DVMClient client = new DVMClient("8080",jsonMsg);
+        DVMClient client = new DVMClient("127.0.0.1",jsonMsg);
         client.run();
     }
 
