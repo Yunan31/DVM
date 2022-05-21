@@ -3,16 +3,18 @@ import DVM_Server.DVMServer;
 import GsonConverter.Serializer;
 import Model.Message;
 
+import javax.swing.*;
 import java.util.List;
 import java.util.Random;
 
-public class VM extends dvm_gui{
+public class VM {
 
     Item item = new Item();
+
     /**
      * Default constructor
      */
-    public VM(){
+    public VM() {
         isValid = false;
         position = new int[100][100];
         isNone = false;
@@ -31,6 +33,7 @@ public class VM extends dvm_gui{
 
     private void showMenu() {
         // TODO implement here
+        dvm_gui dvm_gui = new dvm_gui();
     }
 
 
@@ -61,7 +64,7 @@ public class VM extends dvm_gui{
 
 
     private void showSetUp() {
-        // TODO implement here
+
     }
 
 
@@ -117,15 +120,15 @@ public class VM extends dvm_gui{
 
 
     private void msgRequest(String type, String code, int count, String dst, String authCode) throws InterruptedException { //1. int type => string type 2. int code => String code
-                                                                                                // 3.type string은 추후에 바꿔야함~ 4. 목표 vmID인자로 추가~
-                                                                                                //5. String authCode 인자로 추가.
+        // 3.type string은 추후에 바꿔야함~ 4. 목표 vmID인자로 추가~
+        //5. String authCode 인자로 추가.
         // TODO implement here
         // magType = "StockCheckRequest" or "StockCheckResponse" or "PrepaymentCheck" or "SalesCheckRequest" or "SalesCheckResponse
 
         //이 변수들도 다 추가해야하나...
         //List<Integer> list = item.getVMId();
 
-        requestMsg(type,code,count,dst,authCode, item.getXpos(), item.getyPos()); //이거 하나로 다 가능해보임. 안돼면 필요 없는 인자갑ㅅ들 ㅣㅂ워주거ㅏㄴ null값으로 바꿔줘야함.
+        requestMsg(type, code, count, dst, authCode, item.getXpos(), item.getyPos()); //이거 하나로 다 가능해보임. 안돼면 필요 없는 인자갑ㅅ들 ㅣㅂ워주거ㅏㄴ null값으로 바꿔줘야함.
 
 //        if(type.equals("재고 확인 요청")){ //broadcast로 전부 보내야 함.
 //            requestMsg(type,code,count,"0",null,0,0); //dst를 0으로 줘서 broadcast를 보냄.
@@ -156,11 +159,10 @@ public class VM extends dvm_gui{
         Serializer msg2json = new Serializer();
         //List<Integer> list = item.getVMId();
 
-        if(type.equals("PrepaymentCheck")||type.equals("SalesCheckResponse")){
+        if (type.equals("PrepaymentCheck") || type.equals("SalesCheckResponse")) {
             msg.setSrcId(dst); //우리 Id는 5로 고정 => 얘도 item에 저장하고 가져오는 식으로 해야하나...? (귀찮음 ㅎㅎ)
             msg.setDstID("5");
-        }
-        else{
+        } else {
             msg.setSrcId("5"); //우리 Id는 5로 고정 => 얘도 item에 저장하고 가져오는 식으로 해야하나...? (귀찮음 ㅎㅎ)
             msg.setDstID(dst);
         }
@@ -174,7 +176,7 @@ public class VM extends dvm_gui{
 
         String jsonMsg = msg2json.message2Json(msg); //msg=>json
 
-        DVMClient client = new DVMClient("127.0.0.1",jsonMsg);
+        DVMClient client = new DVMClient("127.0.0.1", jsonMsg);
         client.run();
     }
 
@@ -185,35 +187,35 @@ public class VM extends dvm_gui{
 
 
     private int[] findNearVm(String msgType) { //msgList의 여러 type들 중 필요한 type의 값만 가져와야 하므로 String 인자 추가.
-                                                //그리고 반환 타입이 int[][]인데 int[]로 바꿈
+        //그리고 반환 타입이 int[][]인데 int[]로 바꿈
         // TODO implement here
-        int dist = 99*99*99*99;
+        int dist = 99 * 99 * 99 * 99;
         String id = "null";
         int xPos = -1;
         int yPos = -1;
-        for(int i=0;i< DVMServer.msgList.size();i++){
-            if(DVMServer.msgList.get(i).getMsgType().equals(msgType)){
-                int xDiff=DVMServer.msgList.get(i).getMsgDescription().getDvmXCoord()-item.getXpos();
-                int yDiff=DVMServer.msgList.get(i).getMsgDescription().getDvmYCoord()-item.getyPos();
-                if(xDiff*xDiff*yDiff*yDiff<dist){
-                    dist = xDiff*xDiff*yDiff*yDiff;
+        for (int i = 0; i < DVMServer.msgList.size(); i++) {
+            if (DVMServer.msgList.get(i).getMsgType().equals(msgType)) {
+                int xDiff = DVMServer.msgList.get(i).getMsgDescription().getDvmXCoord() - item.getXpos();
+                int yDiff = DVMServer.msgList.get(i).getMsgDescription().getDvmYCoord() - item.getyPos();
+                if (xDiff * xDiff * yDiff * yDiff < dist) {
+                    dist = xDiff * xDiff * yDiff * yDiff;
                     id = DVMServer.msgList.get(i).getDstID();
                     xPos = DVMServer.msgList.get(i).getMsgDescription().getDvmXCoord();
-                    yPos =DVMServer.msgList.get(i).getMsgDescription().getDvmYCoord();
+                    yPos = DVMServer.msgList.get(i).getMsgDescription().getDvmYCoord();
                 }
             }
         }
-        if(id.equals("null")){ //요청에 대한 리턴 값이 없음.
+        if (id.equals("null")) { //요청에 대한 리턴 값이 없음.
             return null;
         }
 
         int[] pos = new int[2]; //넘길 변수 구현.
-        pos[0]=xPos;
-        pos[1]=yPos;
+        pos[0] = xPos;
+        pos[1] = yPos;
 
         return pos;
     }
-    
+
 
     private void getCountMsg(int code, int count) {
         // TODO implement here
@@ -232,7 +234,7 @@ public class VM extends dvm_gui{
 
     private void insertAuthCode(int code, int count, String authCode) {
         // TODO implement here
-        item.insertAuthCode(code,count,authCode);
+        item.insertAuthCode(code, count, authCode);
     }
 
 
@@ -274,7 +276,7 @@ public class VM extends dvm_gui{
         int targetStringLength = 10;
         Random random = new Random();
 
-        String generatedString = random.ints(leftLimit,rightLimit + 1)
+        String generatedString = random.ints(leftLimit, rightLimit + 1)
                 .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
                 .limit(targetStringLength)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
@@ -322,6 +324,14 @@ public class VM extends dvm_gui{
 
     private void update(int code, int count) {
         // TODO implement here
-        item.update(code,count);
+        item.update(code, count);
+    }
+
+    public Item getItem(){
+        return item;
+    }
+
+    public void setItem(Item it){
+        item = it;
     }
 }
