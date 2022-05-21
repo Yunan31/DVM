@@ -26,14 +26,17 @@ public class VM {
     private String authCode;
 
 
-    private void selectItem(int code, int count) {
-        // TODO implement here
+    //private -> public GUI selectItem()에서 사용
+    //return void -> boolean 값에 따라 띄우는 화면이 달라짐
+    public boolean selectItem(int code, int count) {
+        isNone = checkItemStock(code, count);
+        return isNone;
     }
 
 
     private void showMenu() {
         // TODO implement here
-        dvm_gui dvm_gui = new dvm_gui();
+
     }
 
 
@@ -57,9 +60,10 @@ public class VM {
     }
 
 
-    private boolean checkManagerAccess(int code) {
+    //private -> public
+    public boolean checkManagerAccess(int code) {
         // TODO implement here
-        return false;
+        return code == item.getMid();
     }
 
 
@@ -95,17 +99,29 @@ public class VM {
 
     private boolean checkItemStock(int code, int count) {
         // TODO implement here
-        return false;
+        return isNone;
+    }
+
+    //private -> public
+    //void -> int[]
+    //인자 없앰 (int xPos, yPos)
+    //메세지 안에서 실행해줘야할듯
+    public int[] guideOtherMachine() {
+        // TODO implement here
+        int[] pos = new int[2];
+        //테스트
+        pos[0] = 1; pos[1] = 2;
+        return pos;
     }
 
 
-    private void guideOtherMachine(int xPos, int yPos) {
+    //private -> public
+    //return void -> boolean(isValid)
+    //인자에 카드번호 추가
+    public boolean normalPayment(int cardNum, int code, int count) {
         // TODO implement here
-    }
-
-
-    private void normalPayment(int code, int count) {
-        // TODO implement here
+        isValid = item.checkCard(cardNum, code, count);
+        return isValid;
     }
 
 
@@ -185,7 +201,6 @@ public class VM {
 
     }
 
-
     private int[] findNearVm(String msgType) { //msgList의 여러 type들 중 필요한 type의 값만 가져와야 하므로 String 인자 추가.
         //그리고 반환 타입이 int[][]인데 int[]로 바꿈
         // TODO implement here
@@ -253,8 +268,17 @@ public class VM {
     }
 
 
-    private void prePayment() {
+    //private -> public
+    //return void -> String 인증 코드를 리턴함
+    //결제 성공 시 인증코드는 문자열, 실패 시 ""로 리턴
+    //카드번호, 음료 코드, 개수 인자 추가
+    public String prePayment(int cardNum, int code, int count) {
         // TODO implement here
+        isValid = checkCard(cardNum, code, count);
+        if(isValid)
+            return createAuthCode();
+        else
+            return "";
     }
 
 
@@ -296,7 +320,8 @@ public class VM {
     }
 
 
-    private boolean checkAuthCode(String authCode) {
+    //private -> public
+    public boolean checkAuthCode(String authCode) {
         // TODO implement here
         return item.checkAuthCode(authCode);
     }
@@ -322,16 +347,10 @@ public class VM {
     }
 
 
-    private void update(int code, int count) {
+    //private -> public
+    public void update(int code, int count) {
         // TODO implement here
         item.update(code, count);
     }
 
-    public Item getItem(){
-        return item;
-    }
-
-    public void setItem(Item it){
-        item = it;
-    }
 }

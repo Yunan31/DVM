@@ -8,9 +8,10 @@ import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 public class Main {
     static DVMServer server;
     public static void main(String[] args) throws InterruptedException {
-        //dvm_gui t = new dvm_gui();
-        //t.setDefaultCloseOperation(EXIT_ON_CLOSE);    //종료 이벤트
-        //VM vm = new VM();
+
+        //GUI 테스트 부분
+        //dvm_gui d = new dvm_gui();
+        //d.setUp();
 
         Thread1 thread = new Thread1();
         thread.start();

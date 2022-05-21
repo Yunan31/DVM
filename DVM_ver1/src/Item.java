@@ -10,9 +10,10 @@ public class Item {
      * Default constructor
      */
     public Item() {
+
     }
 
-    private List<Integer> vmid; //int [] => list<int>로 형변환
+    private List<Integer> vmid = new ArrayList<>(); //int [] => list<int>로 형변환
     private int mid;
     private int xPos = 5; //새로이 추가된 두 위아래 좌표놈들. setup에서 초기화 안해주므로 임의로 값 집어넣음.
     private int yPos = 10; //이하동문.
@@ -22,7 +23,7 @@ public class Item {
     private int itemPrice[] = new int[20]; //아예 새로 추가한 항목임, 음료 코드랑 개수는 고려했지만 가격을 고려하지 못해서 추가함.
                                            //이건 그냥 선언과 동시에 초기화 해도 될듯함. (사용자 입력으로 받을 필요성을 느끼지 못함)
     private boolean isNone;
-    private HashMap<String,String> authCode; //기존의 Integer, String에서 String, String으로 변환
+    private HashMap<String,String> authCode = new HashMap<>(); //기존의 Integer, String에서 String, String으로 변환
                                              //앞의 String에 authCode가 들어가고 뒤의 String엔 "음료코드 개수" 형식으로 띄어쓰기해서
                                              //들어갈 예정. split 사용해서 쓰면 됨.
                                              //즉 authcode를 키값으로 찾을것임.
@@ -39,6 +40,8 @@ public class Item {
     public int getyPos(){//위에 새로이 추가하면서 추가된 놈
         return this.yPos;
     }
+
+    public int getMid() { return this.mid; }
 
     public void setMid(int mid) {
         // TODO implement here
