@@ -62,7 +62,7 @@ public class Item {
     }
 
 
-    public void setItem(int code, int count, int price) {
+    public void setItem(int code, int count,int price) {
         // TODO implement here
         itemCount[code]=count;
         itemPrice[code]=price;

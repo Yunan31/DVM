@@ -154,19 +154,19 @@ public class VM {
     }
 
 
-    private void setVmid(int vmid) {
+    public void setVmid(int vmid) {
         // TODO implement here
         item.setVmid(vmid);
     }
 
 
-    private void setMid(int mid) {
+    public void setMid(int mid) {
         // TODO implement here
         item.setMid(mid);
     }
 
 
-    private void setCard(int cardNum, int cardBalance) {
+    public void setCard(int cardNum, int cardBalance) {
         // TODO implement here
         item.setCard(cardNum,cardBalance);
     }
@@ -513,7 +513,7 @@ public class VM {
     }
 
 
-    private void manageStock(int code, int count) { //인자 두개 추가.
+    public void manageStock(int code, int count) { //인자 두개 추가.
         // TODO implement here
         item.update(code, count);
     }
