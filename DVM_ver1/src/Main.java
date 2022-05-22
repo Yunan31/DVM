@@ -12,10 +12,11 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
 
         //GUI 테스트 부분
-        //dvm_gui d = new dvm_gui();
-        //d.setUp();
-        VM vm = new VM();
-        vm.start();
+        dvm_gui d = new dvm_gui();
+        d.setUp();
+
+        //VM vm = new VM();
+        //vm.start();
 
         System.out.println("wait ... Thread2 ");
         Thread1 thread = new Thread1();

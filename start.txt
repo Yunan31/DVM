@@ -1,3 +1,8 @@
-{srcId:"1", dstId:"2",msgType:"type",msgDescription:null}
+{srcId:"1", dstId:"0",msgType:"StockCheckRequest",msgDescription:{itemCode:"1",itemNum:3,dvmXCoord:null,dvmYCoord:null,authCode:null}}
+
+{srcId:"1", dstId:"5",msgType:"PrepaymentCheck",msgDescription:{itemCode:"1",itemNum:3,dvmXCoord:null,dvmYCoord:null,authCode:"1234567890"}}
+
+{srcId:"1", dstId:"0",msgType:"SalesCheckRequest",msgDescription:{itemCode:"1",itemNum:3,dvmXCoord:null,dvmYCoord:null,authCode:null}}
+
 {srcId:"1", dstId:"2",msgType:"type2",msgDescription:null}
  // magType = "StockCheckRequest" or "StockCheckResponse" or "PrepaymentCheck" or "SalesCheckRequest" or "SalesCheckResponse

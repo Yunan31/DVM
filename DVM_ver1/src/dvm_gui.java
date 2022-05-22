@@ -58,7 +58,8 @@ class dvm_gui {
         frame.setVisible(true);
     }
 
-    public void setUp() {
+    public void setUp() throws InterruptedException {
+        vm.start();
         JFrame frame = new JFrame();
         final String[] setUp_menus = {
                 "Other DVM ID",
@@ -204,17 +205,25 @@ class dvm_gui {
         JButton OK_btn = new JButton("OK");
         OK_btn.setBounds(140, 280, 100, 30);
         OK_btn.addActionListener(new ActionListener() {
+            String itemStockCheck="";
             @Override
             public void actionPerformed(ActionEvent e) {
-                boolean isNone = vm.selectItem(code[0], num[0]);
+                try {
+                     itemStockCheck = vm.selectItem(code[0], num[0]);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
                 payItem[0] = code[0];
                 payItem[1] = num[0];
-                if(isNone){
-                    payment(0, payItem[0], payItem[1]);
+                if(itemStockCheck.equals("our")){
+                    payment(0, payItem[0], payItem[1],"");
                 }
-                else {
-                    position = vm.guideOtherMachine();
-                    guideOtherMachine(position);
+                else if(itemStockCheck.equals("none")){ //요청을 보냈는데 다른 vm에도 없음
+                    //코드 추가
+                }
+                else{ //다른 애에 있음
+
+                    guideOtherMachine(vm.getPosition(),itemStockCheck);
                 }
                 frame.dispose();
             }
@@ -243,7 +252,7 @@ class dvm_gui {
     }
 
     //temp 선언해둔것들 다 지움
-    public void guideOtherMachine(int[] pos){
+    public void guideOtherMachine(int[] pos,String dstId){
         JFrame frame = new JFrame();
         frame.setTitle("guide other machine");
         frame.setSize(500,500);
@@ -266,7 +275,7 @@ class dvm_gui {
         guideDVM_prepay.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                payment(1, payItem[0], payItem[1]);
+                payment(1, payItem[0], payItem[1],dstId);
                 frame.dispose();
             }
         });
@@ -292,7 +301,7 @@ class dvm_gui {
     //payType에 따라 선결제, 일반결제를 판단
     //0 -> 일반결제 , 1 -> 선결제
     //int code, int count 인자 추가
-    public void payment(int payType, int code, int count){
+    public void payment(int payType, int code, int count,String dstID){
         JFrame frame = new JFrame();
         frame.setTitle("guide other machine");
         frame.setSize(500,500);
@@ -311,14 +320,19 @@ class dvm_gui {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(cardNum_tf.getText().length()!=0) {
-                    if (payType == 0) {
+                    if (payType == 0) { //일반결제
                         boolean isValid = vm.normalPayment(Integer.parseInt(cardNum_tf.getText()), payItem[0], payItem[1]);
                         if (isValid) {
                             successUI();
                             frame.dispose();
                         }
-                    } else {
-                        String authCode = vm.prePayment(Integer.parseInt(cardNum_tf.getText()), payItem[0], payItem[1]);
+                    } else { //선결제
+                        String authCode = null;
+                        try {
+                            authCode = vm.prePayment(Integer.parseInt(cardNum_tf.getText()), payItem[0], payItem[1],dstID);
+                        } catch (InterruptedException ex) {
+                            ex.printStackTrace();
+                        }
                         if (authCode.length() != 0) {
                             prepaymentSuccess(authCode);
                             frame.dispose();
@@ -512,7 +526,11 @@ class dvm_gui {
             public void actionPerformed(ActionEvent e) {
                 //리셋기능 필요한가 잘 모르겠음
                 vm = new VM();
-                setUp();
+                try {
+                    setUp();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
                 frame.dispose();
             }
         });

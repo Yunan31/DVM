@@ -18,21 +18,24 @@ public class VM {
      */
     public VM() {
         isValid = false;
-        position = new int[100][100];
+        position = new int[2];
         isNone = false;
     }
 
     private boolean isValid;
-    private int position[][];
+    private int position[];
     private boolean isNone;
     private String authCode;
 
+    public int[] getPosition(){
+        return this.position;
+    }
     private class Thread2 extends Thread{
         @Override
         public void run(){
             try{
                 while(true){
-                    Thread.sleep(1000);
+                    Thread.sleep(3000);
 
                     System.out.println("present msgList size: "+Integer.toString(DVMServer.msgList.size()));
 //                    if(DVMServer.msgList.size()>0){
@@ -51,7 +54,7 @@ public class VM {
                                 int checkCode = Integer.parseInt(msg.get(j).getMsgDescription().getItemCode());
                                 int checkNum = msg.get(j).getMsgDescription().getItemNum();
 
-                                if(checkItemStock(checkCode, checkNum)){
+                                if(item.checkItemStock(checkCode, checkNum)){
                                     System.out.println("request StockCheckResponse start");
                                     requestMsg("StockCheckResponse",Integer.toString(checkCode),checkNum,msg.get(j).getSrcId(),"",item.getXpos(),item.getyPos());
                                     System.out.println("request StockCheckResponse done");
@@ -67,7 +70,7 @@ public class VM {
                                 int checkCode = Integer.parseInt(msg.get(j).getMsgDescription().getItemCode());
                                 int checkNum = msg.get(j).getMsgDescription().getItemNum();
 
-                                if(checkItemStock(checkCode, checkNum)){
+                                if(item.checkItemStock(checkCode, checkNum)){
                                     System.out.println("request SalesCheckResponse start");
                                     requestMsg("SalesCheckResponse",Integer.toString(checkCode),0,msg.get(j).getSrcId(),"",item.getXpos(),item.getyPos());
                                     System.out.println("request SalesCheckResponse done");
@@ -97,13 +100,13 @@ public class VM {
 
     //private -> public GUI selectItem()에서 사용
     //return void -> boolean 값에 따라 띄우는 화면이 달라짐
-    public boolean selectItem(int code, int count) {
-        isNone = checkItemStock(code, count);
-        return isNone;
+    public String selectItem(int code, int count) throws InterruptedException {
+        String itemStockCheck = checkItemStock(code, count);
+        return itemStockCheck;
     }
 
     public void start() throws InterruptedException { //초기에 vm시작할때 시작되어야함. 새로 추가한것.
-        setup();
+       // setup();
 
 
         Thread2 thread = new Thread2();
@@ -111,9 +114,6 @@ public class VM {
 
 
         Thread.sleep(3000);
-
-
-
     }
 
     private void showMenu() {
@@ -182,9 +182,27 @@ public class VM {
     }
 
 
-    private boolean checkItemStock(int code, int count) {
+    private String checkItemStock(int code, int count) throws InterruptedException { //
         // TODO implement here
-        return item.checkItemStock(code,count);
+
+        if(item.checkItemStock(code,count)){
+            return "our"; //우리꺼에서 체크
+        }
+
+        requestMsg("StockCheckRequest",Integer.toString(code),count,"0","",item.getXpos(),item.getyPos());
+
+        Thread.sleep(1500);
+
+        ArrayList<Message> msg = returnMsg("StockCheckReponse");
+
+        if(msg.size()==0){
+            System.out.println("No StockCheckRequest response");
+            return "none"; //응답을 받은게 없음
+        }
+
+        String dstId = findNearVm(msg);
+
+        return dstId; //남에꺼 체크
     }
 
     //private -> public
@@ -294,18 +312,16 @@ public class VM {
             if (DVMServer.msgList.get(i).getMsgType().equals(msgType)) {
                 msgList.add(DVMServer.msgList.get(i));
                 DVMServer.msgList.remove(i);
+                i--;
             }
+
+
         }
 
         return msgList;
     }
 
-    private void msgReturn(String type, String code, int count, String dst, String authCode, int xPos, int yPos) { //필요가 있나?
-        // TODO implement here
-
-    }
-
-    private int[] findNearVm(ArrayList<Message> msgList) { //returnMsg에서 지정한 type의 메세지를 가져와서 findNearVm에 넣으면 됨.
+    private String findNearVm(ArrayList<Message> msgList) { //returnMsg에서 지정한 type의 메세지를 가져와서 findNearVm에 넣으면 됨.
         //그리고 반환 타입이 int[][]인데 int[]로 바꿈
         // TODO implement here
         int dist = 99 * 99 * 99 * 99;
@@ -327,11 +343,12 @@ public class VM {
             return null;
         }
 
-        int[] pos = new int[2]; //넘길 변수 구현.
-        pos[0] = xPos;
-        pos[1] = yPos;
+        this.position[0]=xPos;
+        this.position[1]=yPos;
 
-        return pos;
+
+
+        return id;
     }
 
 
@@ -375,11 +392,15 @@ public class VM {
     //return void -> String 인증 코드를 리턴함
     //결제 성공 시 인증코드는 문자열, 실패 시 ""로 리턴
     //카드번호, 음료 코드, 개수 인자 추가
-    public String prePayment(int cardNum, int code, int count) {
+    public String prePayment(int cardNum, int code, int count,String dstId) throws InterruptedException {
         // TODO implement here
         isValid = checkCard(cardNum, code, count);
-        if(isValid)
-            return createAuthCode();
+        if(isValid){
+            String authCode =createAuthCode();
+            requestMsg("PrepaymentCheck" ,Integer.toString(code), count,dstId,authCode,item.getXpos(),item.getyPos()); //dst
+            return authCode;
+        }
+
         else
             return "";
     }
@@ -409,6 +430,7 @@ public class VM {
                 .limit(targetStringLength)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
+
 
         return generatedString;
     }
