@@ -15,10 +15,15 @@ class dvm_gui {
     private int[] position = new int[2];
     dvm_gui(){
         vm = new VM();
+        //setUp();
     }
 
     public void selectMode(){
         JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setLocationRelativeTo(null);  // ?? 제 노트북이 문제인지 가운데로 안가네요,,,;; - 상희
+        frame.setResizable(false);
+
         frame.setTitle("select mode");
         frame.setSize(500,500);
         frame.setLayout(new GridLayout(0,3));
@@ -56,21 +61,26 @@ class dvm_gui {
         frame.add(selectMode_manager_btn);
 
         frame.setVisible(true);
+
     }
 
     public void setUp() throws InterruptedException {
         vm.start();
         JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+
         final String[] setUp_menus = {
                 "Other DVM ID",
                 "Manager ID",
                 "카드 번호",
                 "카드 잔액",
                 "음료 코드",
-                "음료 개수"
+                "음료 개수",
+                "음료 가격"
         };
-        JLabel[] setUp_menu_label = new JLabel[6];
-        JTextField[] setUp_tf = new JTextField[6];
+        JLabel[] setUp_menu_label = new JLabel[7];
+        JTextField[] setUp_tf = new JTextField[7];
         frame.setTitle("set up");
         frame.setSize(500, 500);
         frame.setLayout(null);
@@ -89,7 +99,7 @@ class dvm_gui {
         JButton checkA = new JButton("V");
         JButton checkB = new JButton("V");
         JButton checkCD = new JButton("V");
-        JButton checkEF = new JButton("V");
+        JButton checkEFG = new JButton("V");
 
         checkA.addActionListener(new ActionListener() {
             @Override
@@ -119,28 +129,31 @@ class dvm_gui {
                 setUp_tf[3].setText("");
             }
         });
-        checkEF.addActionListener(new ActionListener() {
+        checkEFG.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(setUp_tf[4].getText().length()!=0&&setUp_tf[5].getText().length()!=0)
+                int checkItemInputs = setUp_tf[4].getText().length() * setUp_tf[5].getText().length() * setUp_tf[6].getText().length();
+                if(checkItemInputs!=0)
                     vm.item.setItem(
                             Integer.parseInt(setUp_tf[4].getText()),
-                            Integer.parseInt(setUp_tf[5].getText())
+                            Integer.parseInt(setUp_tf[5].getText()),
+                            Integer.parseInt(setUp_tf[6].getText())
                     );
                 setUp_tf[4].setText("");
                 setUp_tf[5].setText("");
+                setUp_tf[6].setText("");
             }
         });
 
         checkA.setBounds(350, 30, 50, 30);
         checkB.setBounds(350, 80, 50, 30);
         checkCD.setBounds(350, 160, 50, 30);
-        checkEF.setBounds(350, 260, 50, 30);
+        checkEFG.setBounds(350, 280, 50, 30);
 
         frame.add(checkA);
         frame.add(checkB);
         frame.add(checkCD);
-        frame.add(checkEF);
+        frame.add(checkEFG);
 
         JButton setUp_OK = new JButton("OK");
         setUp_OK.addActionListener(new ActionListener() {
@@ -150,7 +163,7 @@ class dvm_gui {
                 frame.dispose();
             }
         });
-        setUp_OK.setBounds(200, 330, 100, 30);
+        setUp_OK.setBounds(200, 380, 100, 30);
         frame.add(setUp_OK);
 
         frame.setVisible(true);
@@ -162,6 +175,9 @@ class dvm_gui {
         int[] num = new int[1];
         //결제될 음료 코드와 음료 개수
         JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+
         final String[] item_no = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
                 "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"};
         JButton[] item_buttons = new JButton[20];
@@ -248,12 +264,14 @@ class dvm_gui {
         }
 
         frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     //temp 선언해둔것들 다 지움
     public void guideOtherMachine(int[] pos,String dstId){
         JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+
         frame.setTitle("guide other machine");
         frame.setSize(500,500);
         frame.setLayout(null);
@@ -303,6 +321,9 @@ class dvm_gui {
     //int code, int count 인자 추가
     public void payment(int payType, int code, int count,String dstID){
         JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+
         frame.setTitle("guide other machine");
         frame.setSize(500,500);
         frame.setLayout(null);
@@ -360,6 +381,9 @@ class dvm_gui {
 
     public void prepaymentSuccess(String authCode){
         JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+
         frame.setTitle("prepayment success");
         frame.setSize(500,500);
         frame.setLayout(null);
@@ -393,6 +417,9 @@ class dvm_gui {
 
     public void readPrepayAuthCode(){
         JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+
         frame.setTitle("read authentication code");
         frame.setSize(500,500);
         frame.setLayout(null);
@@ -437,6 +464,9 @@ class dvm_gui {
 
     public void successUI(){
         JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+
         frame.setTitle("success");
         frame.setSize(500,500);
         frame.setLayout(null);
@@ -462,6 +492,9 @@ class dvm_gui {
 
     public void readManagerAuthCode(){
         JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+
         frame.setTitle("read manager code");
         frame.setSize(500,500);
         frame.setLayout(null);
@@ -506,6 +539,9 @@ class dvm_gui {
 
     public void managingVM(){
         JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+
         frame.setTitle("managing vm");
         frame.setSize(500,500);
         frame.setLayout(null);
@@ -554,6 +590,9 @@ class dvm_gui {
 
     public void manageStock(){
         JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+
         frame.setTitle("manage stock");
         frame.setSize(500,500);
         frame.setLayout(null);

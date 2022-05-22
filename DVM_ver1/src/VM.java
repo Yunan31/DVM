@@ -464,6 +464,7 @@ public class VM {
         System.out.println("=======Set Up========");
         int tmp=0;
         int tmp2=0;
+        int tmp3=0;
         while(true){
             System.out.print("다른 vmId를 입력해주세요: (종료: -1)");
             tmp=sc.nextInt();
@@ -503,9 +504,17 @@ public class VM {
             if(tmp2==-1){
                 break;
             }
+            
+            System.out.print("음료 금액을 입력해주세요(Int): (종료: -1)");
+            tmp3= sc.nextInt();
+            System.out.println();
+            if(tmp3==-1){
+                break;
+            }
 
-            item.setItem(tmp,tmp2);
-            System.out.println("음료코드: "+Integer.toString(tmp)+" 음료개수: "+Integer.toString(tmp2)+" setup완료");
+            item.setItem(tmp,tmp2,tmp3);
+            System.out.println("음료코드: "+Integer.toString(tmp)+" 음료개수: "+Integer.toString(tmp2)+
+                    "음료금액: "+Integer.toString(tmp3)+ " setup완료");
         }
 
         System.out.println("Set Up을 종료합니다...");
