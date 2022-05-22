@@ -70,9 +70,14 @@ public class Item {
 
     public boolean checkItemStock(int code, int count) {
         // TODO implement here
+        System.out.print("code: "+Integer.toString(code)+" count:" +Integer.toString(count));
         if(itemCount[code]>=count){ //재고 확인해서 주문수량 보다 크거나 같으면 true return
+            System.out.print("있음");
+            System.out.println();
             return true;
         }
+        System.out.print("없음");
+        System.out.println();
         return false;
     }
 
@@ -80,9 +85,9 @@ public class Item {
     public void insertAuthCode(int code, int count, String authCode) { //msg로 들어온 값 받아와서 해시맵에 저장
         // TODO implement here
         String items = Integer.toString(code);
-        items += " "+Integer.toString(count);
+        items += " "+ Integer.toString(count);
         this.authCode.put(authCode,items);
-
+        System.out.println("insert authCode: "+authCode + "items: "+items);
     }
 
 

@@ -3,6 +3,8 @@ import DVM_Server.DVMServer;
 import GsonConverter.Serializer;
 import Model.Message;
 
+import java.util.ArrayList;
+
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 public class Main {
@@ -12,15 +14,19 @@ public class Main {
         //GUI 테스트 부분
         //dvm_gui d = new dvm_gui();
         //d.setUp();
+        VM vm = new VM();
+        vm.start();
 
+        System.out.println("wait ... Thread2 ");
         Thread1 thread = new Thread1();
         thread.start();
 
-        Thread.sleep(5000); //Thread 실행될때까지 대기
+        System.out.println("wait ... Thread1 ");
+        Thread.sleep(3000); //Thread 실행될때까지 대기
         //31까지 server socket test 부분. socket에서 메세지로 {srcId:"1", dstId:"2",msgType:"type",msgDescription:null} 이 값 넣으면 type 반환하고 삭제해줌.
 
 //        while(true){
-//            Thread.sleep(5000);
+//            Thread.sleep(2000);
 //            if(DVMServer.msgList.size()==0){
 //                System.out.println("server not ok");
 //                //DVMServer.msgList.get(DVMServer.msgList.size()-1).getDstID(); 이런 식으로 사용하면 되나.
@@ -32,7 +38,7 @@ public class Main {
 //        }
 
 
-        //requestMsg("StockCheckRequest","12",3,"0","dlgusrb123",5,5); //==> 소켓으로 client 테스트 해보려고 했는데 아직 안되는듯.
+        //requestMsg("StockCheckRequest","12",3,"0","dlgusrb123",5,5); //==> 소켓으로 client port binding 오류가 나긴 하는데 되긴 됨
     }
 
     //임의로 테스트 하려고 가져온 코드 나중에 지울거임~
@@ -60,7 +66,7 @@ public class Main {
 
         String jsonMsg = msg2json.message2Json(msg); //msg=>json
 
-        DVMClient client = new DVMClient("127.0.0.1",jsonMsg);
+        DVMClient client = new DVMClient("localhost",jsonMsg);
         client.run();
     }
 

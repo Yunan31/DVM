@@ -4,13 +4,15 @@ import GsonConverter.Serializer;
 import Model.Message;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 public class VM {
 
     Item item = new Item();
-
+    Scanner sc = new Scanner(System.in);
     /**
      * Default constructor
      */
@@ -25,6 +27,73 @@ public class VM {
     private boolean isNone;
     private String authCode;
 
+    private class Thread2 extends Thread{
+        @Override
+        public void run(){
+            try{
+                while(true){
+                    Thread.sleep(1000);
+
+                    System.out.println("present msgList size: "+Integer.toString(DVMServer.msgList.size()));
+//                    if(DVMServer.msgList.size()>0){
+//                        for(int i=0;i<DVMServer.msgList.size();i++){
+//                            System.out.println("Type: "+DVMServer.msgList.get(i).getMsgType());
+//                        }
+//                    }
+
+
+                    for (int i = 0; i < DVMServer.msgList.size(); i++) {
+                        if (DVMServer.msgList.get(i).getMsgType().equals("StockCheckRequest")) { //음료 코드_음료 개수_dst id_dst 좌표
+
+                            ArrayList<Message> msg = returnMsg("StockCheckRequest");
+
+                            for(int j=0;j<msg.size();j++){
+                                int checkCode = Integer.parseInt(msg.get(j).getMsgDescription().getItemCode());
+                                int checkNum = msg.get(j).getMsgDescription().getItemNum();
+
+                                if(checkItemStock(checkCode, checkNum)){
+                                    System.out.println("request StockCheckResponse start");
+                                    requestMsg("StockCheckResponse",Integer.toString(checkCode),checkNum,msg.get(j).getSrcId(),"",item.getXpos(),item.getyPos());
+                                    System.out.println("request StockCheckResponse done");
+                                }
+
+                            }
+                            continue;
+                        }
+
+                        if (DVMServer.msgList.get(i).getMsgType().equals("SalesCheckRequest")) { //음료코드 dstId, dst 좌표
+                            ArrayList<Message> msg = returnMsg("SalesCheckRequest");
+                            for(int j=0;j<msg.size();j++){
+                                int checkCode = Integer.parseInt(msg.get(j).getMsgDescription().getItemCode());
+                                int checkNum = msg.get(j).getMsgDescription().getItemNum();
+
+                                if(checkItemStock(checkCode, checkNum)){
+                                    System.out.println("request SalesCheckResponse start");
+                                    requestMsg("SalesCheckResponse",Integer.toString(checkCode),0,msg.get(j).getSrcId(),"",item.getXpos(),item.getyPos());
+                                    System.out.println("request SalesCheckResponse done");
+                                }
+
+                            }
+                            continue;
+                        }
+
+                        if (DVMServer.msgList.get(i).getMsgType().equals("PrepaymentCheck")) {
+                            ArrayList<Message> msg = returnMsg("PrepaymentCheck");
+                            for(int j=0;j<msg.size();j++){
+                                System.out.println("insertAuthCode start");
+                                insertAuthCode(Integer.parseInt(msg.get(j).getMsgDescription().getItemCode()),msg.get(j).getMsgDescription().getItemNum(),msg.get(j).getMsgDescription().getAuthCode());
+                                System.out.println("insertAuthCode done");
+                            }
+                            continue;
+                        }
+                    }
+                }
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
 
     //private -> public GUI selectItem()에서 사용
     //return void -> boolean 값에 따라 띄우는 화면이 달라짐
@@ -33,6 +102,19 @@ public class VM {
         return isNone;
     }
 
+    public void start() throws InterruptedException { //초기에 vm시작할때 시작되어야함. 새로 추가한것.
+        setup();
+
+
+        Thread2 thread = new Thread2();
+        thread.start();
+
+
+        Thread.sleep(3000);
+
+
+
+    }
 
     private void showMenu() {
         // TODO implement here
@@ -74,16 +156,19 @@ public class VM {
 
     private void setVmid(int vmid) {
         // TODO implement here
+        item.setVmid(vmid);
     }
 
 
     private void setMid(int mid) {
         // TODO implement here
+        item.setMid(mid);
     }
 
 
     private void setCard(int cardNum, int cardBalance) {
         // TODO implement here
+        item.setCard(cardNum,cardBalance);
     }
 
 
@@ -99,7 +184,7 @@ public class VM {
 
     private boolean checkItemStock(int code, int count) {
         // TODO implement here
-        return isNone;
+        return item.checkItemStock(code,count);
     }
 
     //private -> public
@@ -175,13 +260,17 @@ public class VM {
         Serializer msg2json = new Serializer();
         //List<Integer> list = item.getVMId();
 
-        if (type.equals("PrepaymentCheck") || type.equals("SalesCheckResponse")) {
-            msg.setSrcId(dst); //우리 Id는 5로 고정 => 얘도 item에 저장하고 가져오는 식으로 해야하나...? (귀찮음 ㅎㅎ)
-            msg.setDstID("5");
-        } else {
-            msg.setSrcId("5"); //우리 Id는 5로 고정 => 얘도 item에 저장하고 가져오는 식으로 해야하나...? (귀찮음 ㅎㅎ)
-            msg.setDstID(dst);
-        }
+//        if (type.equals("PrepaymentCheck") || type.equals("SalesCheckResponse")) {
+//            msg.setSrcId(dst); //우리 Id는 5로 고정 => 얘도 item에 저장하고 가져오는 식으로 해야하나...? (귀찮음 ㅎㅎ)
+//            msg.setDstID("5");
+//        } else {
+//            msg.setSrcId("5"); //우리 Id는 5로 고정 => 얘도 item에 저장하고 가져오는 식으로 해야하나...? (귀찮음 ㅎㅎ)
+//            msg.setDstID(dst);
+//        }
+
+        msg.setSrcId("5"); //우리 Id는 5로 고정 => 얘도 item에 저장하고 가져오는 식으로 해야하나...? (귀찮음 ㅎㅎ)
+        msg.setDstID(dst);
+
         msg.setMsgType(type);
         msgDesc.setItemCode(code);
         msgDesc.setItemNum(count);
@@ -196,28 +285,42 @@ public class VM {
         client.run();
     }
 
+    private ArrayList<Message> returnMsg(String msgType) { //msgList에서 원하는 타입의 반환값 가져오기 int code, int count, int xPos, int yPos 뺌
+        //returnCountMsg에서 returnMsg로 변경, return void 에서 return ArrayList<Message>로 변경
+        // TODO implement here
+        ArrayList<Message> msgList = new ArrayList();
+
+        for (int i = 0; i < DVMServer.msgList.size(); i++) {
+            if (DVMServer.msgList.get(i).getMsgType().equals(msgType)) {
+                msgList.add(DVMServer.msgList.get(i));
+                DVMServer.msgList.remove(i);
+            }
+        }
+
+        return msgList;
+    }
+
     private void msgReturn(String type, String code, int count, String dst, String authCode, int xPos, int yPos) { //필요가 있나?
         // TODO implement here
 
     }
 
-    private int[] findNearVm(String msgType) { //msgList의 여러 type들 중 필요한 type의 값만 가져와야 하므로 String 인자 추가.
+    private int[] findNearVm(ArrayList<Message> msgList) { //returnMsg에서 지정한 type의 메세지를 가져와서 findNearVm에 넣으면 됨.
         //그리고 반환 타입이 int[][]인데 int[]로 바꿈
         // TODO implement here
         int dist = 99 * 99 * 99 * 99;
         String id = "null";
         int xPos = -1;
         int yPos = -1;
-        for (int i = 0; i < DVMServer.msgList.size(); i++) {
-            if (DVMServer.msgList.get(i).getMsgType().equals(msgType)) {
-                int xDiff = DVMServer.msgList.get(i).getMsgDescription().getDvmXCoord() - item.getXpos();
-                int yDiff = DVMServer.msgList.get(i).getMsgDescription().getDvmYCoord() - item.getyPos();
-                if (xDiff * xDiff * yDiff * yDiff < dist) {
-                    dist = xDiff * xDiff * yDiff * yDiff;
-                    id = DVMServer.msgList.get(i).getDstID();
-                    xPos = DVMServer.msgList.get(i).getMsgDescription().getDvmXCoord();
-                    yPos = DVMServer.msgList.get(i).getMsgDescription().getDvmYCoord();
-                }
+
+        for (int i = 0; i < msgList.size(); i++) {
+            int xDiff = msgList.get(i).getMsgDescription().getDvmXCoord() - item.getXpos();
+            int yDiff = msgList.get(i).getMsgDescription().getDvmYCoord() - item.getyPos();
+            if (xDiff * xDiff * yDiff * yDiff < dist) {
+                dist = xDiff * xDiff * yDiff * yDiff;
+                id = msgList.get(i).getDstID();
+                xPos = msgList.get(i).getMsgDescription().getDvmXCoord();
+                yPos = msgList.get(i).getMsgDescription().getDvmYCoord();
             }
         }
         if (id.equals("null")) { //요청에 대한 리턴 값이 없음.
@@ -232,17 +335,17 @@ public class VM {
     }
 
 
-    private void getCountMsg(int code, int count) {
+    private void getCountMsg(int code, int count) {//msg관련된거  requestMsg, returnMsg로 퉁
         // TODO implement here
+
+
     }
 
 
-    private void returnCountMsg(int code, int count, int xPos, int yPos) {
-        // TODO implement here
-    }
 
 
-    private void getPrePayMsg(int code, int count, String authCode) {
+
+    private void getPrePayMsg(int code, int count, String authCode) { //msg관련된거 위에 두개로 퉁
         // TODO implement here
     }
 
@@ -253,12 +356,12 @@ public class VM {
     }
 
 
-    private void getItemSaleMsg(int code, int count) {
+    private void getItemSaleMsg(int code, int count) { //msg관련된거 위에 두개로 퉁
         // TODO implement here
     }
 
 
-    private void returnItemsSaleCheckMsg(int code, int xPos, int yPos) {
+    private void returnItemsSaleCheckMsg(int code, int xPos, int yPos) { //msg관련된거 위에 두개로 퉁
         // TODO implement here
     }
 
@@ -284,6 +387,7 @@ public class VM {
 
     private void requestCard() {
         // TODO implement here
+
     }
 
 
@@ -334,11 +438,62 @@ public class VM {
 
     private void setup() {
         // TODO implement here
+        // cli 작성부분 주석 처리
+        System.out.println("=======Set Up========");
+        int tmp=0;
+        int tmp2=0;
+        while(true){
+            System.out.print("다른 vmId를 입력해주세요: (종료: -1)");
+            tmp=sc.nextInt();
+            System.out.println();
+            if(tmp==-1){
+                break;
+            }
+            item.setVmid(tmp);
+            System.out.println("vmID: "+Integer.toString(tmp)+" setup 완료");
+        }
+
+        System.out.print("매니저 ID를 입력해주세요(Int): ");
+        tmp=sc.nextInt();
+        item.setMid(tmp);
+        System.out.println("매니저 ID: "+Integer.toString(tmp)+" setup 완료");
+
+        System.out.print("카드번호를 입력해주세요(Int): ");
+        tmp=sc.nextInt();
+        System.out.println();
+        System.out.print("카드잔고를 입력해주세요(Int): ");
+        tmp2=sc.nextInt();
+        item.setCard(tmp,tmp2);
+
+        System.out.println("카드번호: "+Integer.toString(tmp)+" 카드잔고: "+Integer.toString(tmp2)+" setup완료");
+
+        while(true){
+            System.out.print("음료 코드를 입력해주세요(Int): (종료: -1)");
+            tmp=sc.nextInt();
+            System.out.println();
+            if(tmp==-1){
+                break;
+            }
+
+            System.out.print("음료 개수를 입력해주세요(Int): (종료: -1)");
+            tmp2= sc.nextInt();
+            System.out.println();
+            if(tmp2==-1){
+                break;
+            }
+
+            item.setItem(tmp,tmp2);
+            System.out.println("음료코드: "+Integer.toString(tmp)+" 음료개수: "+Integer.toString(tmp2)+" setup완료");
+        }
+
+        System.out.println("Set Up을 종료합니다...");
+
     }
 
 
-    private void manageStock() {
+    private void manageStock(int code, int count) { //인자 두개 추가.
         // TODO implement here
+        item.update(code, count);
     }
 
 

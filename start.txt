@@ -1,1 +1,3 @@
-start
+{srcId:"1", dstId:"2",msgType:"type",msgDescription:null}
+{srcId:"1", dstId:"2",msgType:"type2",msgDescription:null}
+ // magType = "StockCheckRequest" or "StockCheckResponse" or "PrepaymentCheck" or "SalesCheckRequest" or "SalesCheckResponse
