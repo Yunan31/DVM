@@ -15,7 +15,11 @@ class dvm_gui {
     private int[] position = new int[2];
     dvm_gui(){
         vm = new VM();
-        //setUp();
+        try {
+            setUp();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void selectMode(){
@@ -65,7 +69,6 @@ class dvm_gui {
     }
 
     public void setUp() throws InterruptedException {
-        vm.start();
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setResizable(false);
