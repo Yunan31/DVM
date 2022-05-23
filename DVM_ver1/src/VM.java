@@ -20,6 +20,16 @@ public class VM {
         isValid = false;
         position = new int[2];
         isNone = false;
+
+        Thread2 thread = new Thread2();
+        thread.start();
+
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private boolean isValid;
@@ -105,16 +115,16 @@ public class VM {
         return itemStockCheck;
     }
 
-    public void start() throws InterruptedException { //초기에 vm시작할때 시작되어야함. 새로 추가한것.
-       // setup();
-
-
-        Thread2 thread = new Thread2();
-        thread.start();
-
-
-        Thread.sleep(3000);
-    }
+//    public void start() throws InterruptedException { //초기에 vm시작할때 시작되어야함. 새로 추가한것.
+//       // setup();
+//
+//
+//        Thread2 thread = new Thread2();
+//        thread.start();
+//
+//
+//        Thread.sleep(3000);
+//    }
 
 //    private void showMenu() {
 //        // TODO implement here
