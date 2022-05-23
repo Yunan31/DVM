@@ -13,7 +13,7 @@ public class Main {
 
         //GUI 테스트 부분
         dvm_gui d = new dvm_gui();
-        d.setUp();
+        //d.setUp();
 
         //VM vm = new VM();
         //vm.start();
