@@ -116,30 +116,30 @@ public class VM {
         Thread.sleep(3000);
     }
 
-    private void showMenu() {
-        // TODO implement here
-
-    }
-
-
-    private void getPrepayment() {
-        // TODO implement here
-    }
+//    private void showMenu() {
+//        // TODO implement here
+//
+//    }
 
 
-    private void readAuthenticationCode() {
-        // TODO implement here
-    }
+//    private void getPrepayment() {
+//        // TODO implement here
+//    }
 
 
-    private void managerAccess() {
-        // TODO implement here
-    }
+//    private void readAuthenticationCode() {
+//        // TODO implement here
+//    }
 
 
-    private void showInputManagerAuthCode() {
-        // TODO implement here
-    }
+//    private void managerAccess() {
+//        // TODO implement here
+//    }
+
+
+//    private void showInputManagerAuthCode() {
+//        // TODO implement here
+//    }
 
 
     //private -> public
@@ -149,9 +149,9 @@ public class VM {
     }
 
 
-    private void showSetUp() {
-
-    }
+//    private void showSetUp() {
+//
+//    }
 
 
     public void setVmid(int vmid) {
@@ -172,14 +172,14 @@ public class VM {
     }
 
 
-    private void done() {
-        // TODO implement here
-    }
+//    private void done() {
+//        // TODO implement here
+//    }
 
 
-    private void selectMode() {
-        // TODO implement here
-    }
+//    private void selectMode() {
+//        // TODO implement here
+//    }
 
 
     private String checkItemStock(int code, int count) throws InterruptedException { //
@@ -209,13 +209,13 @@ public class VM {
     //void -> int[]
     //인자 없앰 (int xPos, yPos)
     //메세지 안에서 실행해줘야할듯
-    public int[] guideOtherMachine() {
-        // TODO implement here
-        int[] pos = new int[2];
-        //테스트
-        pos[0] = 1; pos[1] = 2;
-        return pos;
-    }
+//    public int[] guideOtherMachine() {
+//        // TODO implement here
+//        int[] pos = new int[2];
+//        //테스트
+//        pos[0] = 1; pos[1] = 2;
+//        return pos;
+//    }
 
 
     //private -> public
@@ -228,14 +228,14 @@ public class VM {
     }
 
 
-    private void cancel() {
-        // TODO implement here
-    }
+//    private void cancel() {
+//        // TODO implement here
+//    }
 
 
-    private void reset() {
-        // TODO implement here
-    }
+//    private void reset() {
+//        // TODO implement here
+//    }
 
 
     private void msgRequest(String type, String code, int count, String dst, String authCode) throws InterruptedException { //1. int type => string type 2. int code => String code
@@ -299,7 +299,7 @@ public class VM {
 
         String jsonMsg = msg2json.message2Json(msg); //msg=>json
 
-        DVMClient client = new DVMClient("127.0.0.1", jsonMsg);
+        DVMClient client = new DVMClient("192.168.66.135", jsonMsg);
         client.run();
     }
 
@@ -352,19 +352,19 @@ public class VM {
     }
 
 
-    private void getCountMsg(int code, int count) {//msg관련된거  requestMsg, returnMsg로 퉁
-        // TODO implement here
+//    private void getCountMsg(int code, int count) {//msg관련된거  requestMsg, returnMsg로 퉁
+//        // TODO implement here
+//
+//
+//    }
 
 
-    }
 
 
-
-
-
-    private void getPrePayMsg(int code, int count, String authCode) { //msg관련된거 위에 두개로 퉁
-        // TODO implement here
-    }
+//
+//    private void getPrePayMsg(int code, int count, String authCode) { //msg관련된거 위에 두개로 퉁
+//        // TODO implement here
+//    }
 
 
     private void insertAuthCode(int code, int count, String authCode) {
@@ -373,19 +373,19 @@ public class VM {
     }
 
 
-    private void getItemSaleMsg(int code, int count) { //msg관련된거 위에 두개로 퉁
-        // TODO implement here
-    }
-
-
-    private void returnItemsSaleCheckMsg(int code, int xPos, int yPos) { //msg관련된거 위에 두개로 퉁
-        // TODO implement here
-    }
-
-
-    private void showOtherVm() {
-        // TODO implement here
-    }
+//    private void getItemSaleMsg(int code, int count) { //msg관련된거 위에 두개로 퉁
+//        // TODO implement here
+//    }
+//
+//
+//    private void returnItemsSaleCheckMsg(int code, int xPos, int yPos) { //msg관련된거 위에 두개로 퉁
+//        // TODO implement here
+//    }
+//
+//
+//    private void showOtherVm() {
+//        // TODO implement here
+//    }
 
 
     //private -> public
@@ -406,10 +406,10 @@ public class VM {
     }
 
 
-    private void requestCard() {
-        // TODO implement here
-
-    }
+//    private void requestCard() {
+//        // TODO implement here
+//
+//    }
 
 
     private boolean checkCard(int cardNum, int code, int count) { //item에서의 부분과 마찬가지로 인자 축.
@@ -436,14 +436,14 @@ public class VM {
     }
 
 
-    private void showAuthcode(String authCode) {
-        // TODO implement here
-    }
-
-
-    private void showInputPreAuthcode() {
-        // TODO implement here
-    }
+//    private void showAuthcode(String authCode) {
+//        // TODO implement here
+//    }
+//
+//
+//    private void showInputPreAuthcode() {
+//        // TODO implement here
+//    }
 
 
     //private -> public
@@ -452,74 +452,77 @@ public class VM {
         return item.checkAuthCode(authCode);
     }
 
-
-    private void showManagingVm() {
-        // TODO implement here
+    public void setItem(int code, int count, int price){
+        item.setItem(code, count, price);
     }
 
+//    private void showManagingVm() {
+//        // TODO implement here
+//    }
 
-    private void setup() {
-        // TODO implement here
-        // cli 작성부분 주석 처리
-        System.out.println("=======Set Up========");
-        int tmp=0;
-        int tmp2=0;
-        int tmp3=0;
-        while(true){
-            System.out.print("다른 vmId를 입력해주세요: (종료: -1)");
-            tmp=sc.nextInt();
-            System.out.println();
-            if(tmp==-1){
-                break;
-            }
-            item.setVmid(tmp);
-            System.out.println("vmID: "+Integer.toString(tmp)+" setup 완료");
-        }
 
-        System.out.print("매니저 ID를 입력해주세요(Int): ");
-        tmp=sc.nextInt();
-        item.setMid(tmp);
-        System.out.println("매니저 ID: "+Integer.toString(tmp)+" setup 완료");
-
-        System.out.print("카드번호를 입력해주세요(Int): ");
-        tmp=sc.nextInt();
-        System.out.println();
-        System.out.print("카드잔고를 입력해주세요(Int): ");
-        tmp2=sc.nextInt();
-        item.setCard(tmp,tmp2);
-
-        System.out.println("카드번호: "+Integer.toString(tmp)+" 카드잔고: "+Integer.toString(tmp2)+" setup완료");
-
-        while(true){
-            System.out.print("음료 코드를 입력해주세요(Int): (종료: -1)");
-            tmp=sc.nextInt();
-            System.out.println();
-            if(tmp==-1){
-                break;
-            }
-
-            System.out.print("음료 개수를 입력해주세요(Int): (종료: -1)");
-            tmp2= sc.nextInt();
-            System.out.println();
-            if(tmp2==-1){
-                break;
-            }
-            
-            System.out.print("음료 금액을 입력해주세요(Int): (종료: -1)");
-            tmp3= sc.nextInt();
-            System.out.println();
-            if(tmp3==-1){
-                break;
-            }
-
-            item.setItem(tmp,tmp2,tmp3);
-            System.out.println("음료코드: "+Integer.toString(tmp)+" 음료개수: "+Integer.toString(tmp2)+
-                    "음료금액: "+Integer.toString(tmp3)+ " setup완료");
-        }
-
-        System.out.println("Set Up을 종료합니다...");
-
-    }
+//    private void setup() {
+//        // TODO implement here
+//        // cli 작성부분 주석 처리
+//        System.out.println("=======Set Up========");
+//        int tmp=0;
+//        int tmp2=0;
+//        int tmp3=0;
+//        while(true){
+//            System.out.print("다른 vmId를 입력해주세요: (종료: -1)");
+//            tmp=sc.nextInt();
+//            System.out.println();
+//            if(tmp==-1){
+//                break;
+//            }
+//            item.setVmid(tmp);
+//            System.out.println("vmID: "+Integer.toString(tmp)+" setup 완료");
+//        }
+//
+//        System.out.print("매니저 ID를 입력해주세요(Int): ");
+//        tmp=sc.nextInt();
+//        item.setMid(tmp);
+//        System.out.println("매니저 ID: "+Integer.toString(tmp)+" setup 완료");
+//
+//        System.out.print("카드번호를 입력해주세요(Int): ");
+//        tmp=sc.nextInt();
+//        System.out.println();
+//        System.out.print("카드잔고를 입력해주세요(Int): ");
+//        tmp2=sc.nextInt();
+//        item.setCard(tmp,tmp2);
+//
+//        System.out.println("카드번호: "+Integer.toString(tmp)+" 카드잔고: "+Integer.toString(tmp2)+" setup완료");
+//
+//        while(true){
+//            System.out.print("음료 코드를 입력해주세요(Int): (종료: -1)");
+//            tmp=sc.nextInt();
+//            System.out.println();
+//            if(tmp==-1){
+//                break;
+//            }
+//
+//            System.out.print("음료 개수를 입력해주세요(Int): (종료: -1)");
+//            tmp2= sc.nextInt();
+//            System.out.println();
+//            if(tmp2==-1){
+//                break;
+//            }
+//
+//            System.out.print("음료 금액을 입력해주세요(Int): (종료: -1)");
+//            tmp3= sc.nextInt();
+//            System.out.println();
+//            if(tmp3==-1){
+//                break;
+//            }
+//
+//            item.setItem(tmp,tmp2,tmp3);
+//            System.out.println("음료코드: "+Integer.toString(tmp)+" 음료개수: "+Integer.toString(tmp2)+
+//                    "음료금액: "+Integer.toString(tmp3)+ " setup완료");
+//        }
+//
+//        System.out.println("Set Up을 종료합니다...");
+//
+//    }
 
 
     public void manageStock(int code, int count) { //인자 두개 추가.
@@ -528,9 +531,9 @@ public class VM {
     }
 
 
-    private void showManageStock() {
-        // TODO implement here
-    }
+//    private void showManageStock() {
+//        // TODO implement here
+//    }
 
 
     //private -> public
