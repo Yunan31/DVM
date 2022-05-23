@@ -136,6 +136,7 @@ class dvm_gui {
                 if(checkItemInputs!=0)
                     vm.item.setItem(
                             Integer.parseInt(setUp_tf[4].getText()),
+                            // 이렇게 1 빼면 배열 인덱스 =/= 음료코드인데 이렇게 가도 ㄱㅊ? - 상희
                             Integer.parseInt(setUp_tf[5].getText()),
                             Integer.parseInt(setUp_tf[6].getText())
                     );
@@ -211,7 +212,7 @@ class dvm_gui {
                 if(quant_tf.getText().length()!=0)
                 {
                     num[0] = Integer.parseInt(quant_tf.getText());
-                    chosen_ta.setText((code[0]+1) + "번 음료 / 개수 : " + num[0]);
+                    chosen_ta.setText((code[0]) + "번 음료 / 개수 : " + num[0]);
                 }
                 quant_tf.setText("");
             }
@@ -235,7 +236,9 @@ class dvm_gui {
                     payment(0, payItem[0], payItem[1],"");
                 }
                 else if(itemStockCheck.equals("none")){ //요청을 보냈는데 다른 vm에도 없음
-                    //코드 추가
+                    failureUI();
+                    frame.dispose();
+                    //코드 추가 상희상희
                 }
                 else{ //다른 애에 있음
 
@@ -257,7 +260,7 @@ class dvm_gui {
             item_buttons[i].addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    code[0] = finalI;
+                    code[0] = finalI+1;
                 }
             });
             frame.add(item_buttons[i]);
@@ -486,6 +489,40 @@ class dvm_gui {
 
         frame.add(successMessage_label);
         frame.add(successOK_btn);
+
+        frame.setVisible(true);
+    }
+
+    public void failureUI(){
+        JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+
+        frame.setTitle("failure");
+        frame.setSize(500,500);
+        frame.setLayout(null);
+
+        JLabel failureMessage_label1 = new JLabel("구매 실패");
+        failureMessage_label1.setFont(new Font("",Font.PLAIN,40));
+        failureMessage_label1.setBounds(150,100,200,70);
+
+        JLabel failureMessage_label2 = new JLabel("해당 품목을 수량만큼 구매할 수 없습니다");
+        failureMessage_label2.setFont(new Font("",Font.PLAIN,20));
+        failureMessage_label2.setBounds(50,180,400,40);
+
+        JButton failureOK_btn = new JButton("OK");
+        failureOK_btn.setBounds(200,250,100,50);
+        failureOK_btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                selectMode();
+                frame.dispose();
+            }
+        });
+
+        frame.add(failureMessage_label1);
+        frame.add(failureMessage_label2);
+        frame.add(failureOK_btn);
 
         frame.setVisible(true);
     }

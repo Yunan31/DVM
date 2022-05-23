@@ -19,8 +19,8 @@ public class Item {
     private int yPos = 10; //이하동문.
     private int cardNum;
     private int cardBalance;
-    private int itemCount[]= new int[20]; //기본 int item[]을 사이즈 20으로 고정 선언, 변수명 변경 (itemPrice에 맞춰서 item => itemCount로)
-    private int itemPrice[] = new int[20]; //아예 새로 추가한 항목임, 음료 코드랑 개수는 고려했지만 가격을 고려하지 못해서 추가함.
+    private int itemCount[]= new int[21]; //기본 int item[]을 사이즈 20으로 고정 선언, 변수명 변경 (itemPrice에 맞춰서 item => itemCount로)
+    private int itemPrice[] = new int[21]; //아예 새로 추가한 항목임, 음료 코드랑 개수는 고려했지만 가격을 고려하지 못해서 추가함.
                                            //이건 그냥 선언과 동시에 초기화 해도 될듯함. (사용자 입력으로 받을 필요성을 느끼지 못함)
     private boolean isNone;
     private HashMap<String,String> authCode = new HashMap<>(); //기존의 Integer, String에서 String, String으로 변환
