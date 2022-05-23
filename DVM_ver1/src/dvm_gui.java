@@ -21,7 +21,6 @@ class dvm_gui {
     public void selectMode(){
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setLocationRelativeTo(null);  // ?? 제 노트북이 문제인지 가운데로 안가네요,,,;; - 상희
         frame.setResizable(false);
 
         frame.setTitle("select mode");
@@ -60,6 +59,7 @@ class dvm_gui {
         frame.add(selectMode_prepay_btn);
         frame.add(selectMode_manager_btn);
 
+        frame.setLocationRelativeTo(null);  // ?? 제 노트북이 문제인지 가운데로 안가네요,,,;; - 상희
         frame.setVisible(true);
 
     }
@@ -167,6 +167,7 @@ class dvm_gui {
         setUp_OK.setBounds(200, 380, 100, 30);
         frame.add(setUp_OK);
 
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
@@ -266,6 +267,7 @@ class dvm_gui {
             frame.add(item_buttons[i]);
         }
 
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
@@ -315,6 +317,7 @@ class dvm_gui {
         frame.add(guideDVM_prepay);
         frame.add(cancel_btn);
 
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
@@ -379,6 +382,7 @@ class dvm_gui {
         frame.add(payment_btn);
         frame.add(cancel_btn);
 
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
@@ -415,6 +419,8 @@ class dvm_gui {
         });
 
         frame.add(prepaySuccess_OK_btn);
+
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
@@ -462,6 +468,7 @@ class dvm_gui {
         });
         frame.add(cancel_btn);
 
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
@@ -490,6 +497,7 @@ class dvm_gui {
         frame.add(successMessage_label);
         frame.add(successOK_btn);
 
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
@@ -524,6 +532,7 @@ class dvm_gui {
         frame.add(failureMessage_label2);
         frame.add(failureOK_btn);
 
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
@@ -571,6 +580,7 @@ class dvm_gui {
         });
         frame.add(cancel_btn);
 
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
@@ -622,6 +632,7 @@ class dvm_gui {
         frame.add(manageVm_setUp_btn);
         frame.add(manageVm_cancel);
 
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
@@ -676,6 +687,7 @@ class dvm_gui {
         frame.add(manageStock_OK_btn);
         frame.add(cancel_btn);
 
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 }

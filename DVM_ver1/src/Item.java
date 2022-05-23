@@ -104,15 +104,19 @@ public class Item {
                                             //1. code, count를 같이 전달해주기
         // TODO implement here
         if(this.cardNum != cardNum){
+            System.out.println("카드 번호가 유효하지 않습니다.");    // 테스트용
             return false;
         }
 
         if(this.cardBalance<itemPrice[code]*count){
+            System.out.println("결제 금액 :"+itemPrice[code]*count+", 보유 금액 :"+this.cardBalance);      // 테스트용
             return false;
         }
 
         //itemOut() => 시퀀스에 있는데 굳이 필요 없어보임 (UI적인 느낌?)
         updateItemStock(code, count);
+        this.cardBalance -= itemPrice[code]*count;      // 카드 잔액 차감
+        System.out.println("잔액 :"+this.cardBalance);    // 테스트용
         return true;
     }
 
