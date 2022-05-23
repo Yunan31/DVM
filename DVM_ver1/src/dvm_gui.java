@@ -65,7 +65,6 @@ class dvm_gui {
 
         frame.setLocationRelativeTo(null);  // ?? 제 노트북이 문제인지 가운데로 안가네요,,,;; - 상희
         frame.setVisible(true);
-
     }
 
     public void setUp() throws InterruptedException {
