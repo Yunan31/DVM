@@ -43,33 +43,33 @@ public class Main {
     }
 
     //임의로 테스트 하려고 가져온 코드 나중에 지울거임~
-    private static void requestMsg(String type, String code, int count, String dst, String authCode, int xPos, int yPos) throws InterruptedException {
-        Message msg = new Message();
-        Message.MessageDescription msgDesc = new Message.MessageDescription();
-        Serializer msg2json = new Serializer();
-        //List<Integer> list = item.getVMId();
-
-        if(type.equals("PrepaymentCheck")||type.equals("SalesCheckResponse")){
-            msg.setSrcId(dst); //우리 Id는 5로 고정 => 얘도 item에 저장하고 가져오는 식으로 해야하나...? (귀찮음 ㅎㅎ)
-            msg.setDstID("5");
-        }
-        else{
-            msg.setSrcId("5"); //우리 Id는 5로 고정 => 얘도 item에 저장하고 가져오는 식으로 해야하나...? (귀찮음 ㅎㅎ)
-            msg.setDstID(dst);
-        }
-        msg.setMsgType(type);
-        msgDesc.setItemCode(code);
-        msgDesc.setItemNum(count);
-        msgDesc.setDvmXCoord(xPos); //이것도 위와 같은 의견. setup에서 정의하지 않음. 아마 연결하기 전에 값 줄건데 그걸로 고정
-        msgDesc.setDvmYCoord(yPos); //이하동문.
-        msgDesc.setAuthCode(authCode);
-        msg.setMsgDescription(msgDesc);
-
-        String jsonMsg = msg2json.message2Json(msg); //msg=>json
-
-        DVMClient client = new DVMClient("localhost",jsonMsg);
-        client.run();
-    }
+//    private static void requestMsg(String type, String code, int count, String dst, String authCode, int xPos, int yPos) throws InterruptedException {
+//        Message msg = new Message();
+//        Message.MessageDescription msgDesc = new Message.MessageDescription();
+//        Serializer msg2json = new Serializer();
+//        //List<Integer> list = item.getVMId();
+//
+//        if(type.equals("PrepaymentCheck")||type.equals("SalesCheckResponse")){
+//            msg.setSrcId(dst); //우리 Id는 5로 고정 => 얘도 item에 저장하고 가져오는 식으로 해야하나...? (귀찮음 ㅎㅎ)
+//            msg.setDstID("5");
+//        }
+//        else{
+//            msg.setSrcId("5"); //우리 Id는 5로 고정 => 얘도 item에 저장하고 가져오는 식으로 해야하나...? (귀찮음 ㅎㅎ)
+//            msg.setDstID(dst);
+//        }
+//        msg.setMsgType(type);
+//        msgDesc.setItemCode(code);
+//        msgDesc.setItemNum(count);
+//        msgDesc.setDvmXCoord(xPos); //이것도 위와 같은 의견. setup에서 정의하지 않음. 아마 연결하기 전에 값 줄건데 그걸로 고정
+//        msgDesc.setDvmYCoord(yPos); //이하동문.
+//        msgDesc.setAuthCode(authCode);
+//        msg.setMsgDescription(msgDesc);
+//
+//        String jsonMsg = msg2json.message2Json(msg); //msg=>json
+//
+//        DVMClient client = new DVMClient("localhost",jsonMsg);
+//        client.run();
+//    }
 
 
     //Thread로 서버 실행하기 위해 static으로 삽입.
