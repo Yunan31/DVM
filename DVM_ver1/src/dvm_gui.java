@@ -121,7 +121,7 @@ class dvm_gui {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(setUp_tf[2].getText().length()!=0&&setUp_tf[3].getText().length()!=0)
-                    vm.item.setCard(
+                    vm.setCard(
                             Integer.parseInt(setUp_tf[2].getText()),
                             Integer.parseInt(setUp_tf[3].getText())
                     );
@@ -134,7 +134,7 @@ class dvm_gui {
             public void actionPerformed(ActionEvent e) {
                 int checkItemInputs = setUp_tf[4].getText().length() * setUp_tf[5].getText().length() * setUp_tf[6].getText().length();
                 if(checkItemInputs!=0)
-                    vm.item.setItem(
+                    vm.setItem(
                             Integer.parseInt(setUp_tf[4].getText()),
                             // 이렇게 1 빼면 배열 인덱스 =/= 음료코드인데 이렇게 가도 ㄱㅊ? - 상희
                             Integer.parseInt(setUp_tf[5].getText()),
