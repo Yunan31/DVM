@@ -308,7 +308,7 @@ public class VM {
         
         if(dst.equals("0")){
             for(int i=0;i<vmIp.length;i++){
-                if(i==4){
+                if(i==Integer.parseInt(srcId)-1){
                     continue;
                 }
                 
