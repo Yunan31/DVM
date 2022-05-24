@@ -35,9 +35,9 @@ public class VM {
     private boolean isValid;
     private int position[];
     private boolean isNone;
-    
+    //"192.168.66.176","192,168.67.11","192.168.67.30","192.168.65.204","our","192.168.64.242"
     private String authCode;
-    private String[] vmIp= {"team1","team2","team3","team4","our","team5"};
+    private String[] vmIp= {"null","192,168.67.11","null","null","our","null"};
     private String srcId ="5";
 
     public int[] getPosition(){
@@ -308,7 +308,7 @@ public class VM {
         
         if(dst.equals("0")){
             for(int i=0;i<vmIp.length;i++){
-                if(i==Integer.parseInt(srcId)-1){
+                if(vmIp[i].equals("our")||vmIp[i].equals("null")){
                     continue;
                 }
                 
