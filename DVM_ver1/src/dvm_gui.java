@@ -245,8 +245,8 @@ class dvm_gui {
                     //코드 추가 상희상희
                 }
                 else{ //다른 애에 있음
-
-                    guideOtherMachine(vm.getPosition(),itemStockCheck);
+                    position = vm.getPosition();
+                    guideOtherMachine(position,itemStockCheck);
                 }
                 frame.dispose();
             }

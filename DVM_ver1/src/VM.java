@@ -37,7 +37,7 @@ public class VM {
     private boolean isNone;
     //"192.168.66.176","192,168.67.11","192.168.67.30","192.168.65.204","our","192.168.64.242"
     private String authCode;
-    private String[] vmIp= {"null","192,168.67.11","null","null","our","null"};
+    private String[] vmIp= {"null","192.168.67.112","null","null","our","null"};
     private String srcId ="5";
 
     public int[] getPosition(){
@@ -198,16 +198,28 @@ public class VM {
 
         requestMsg("StockCheckRequest",Integer.toString(code),count,"0","",item.getXpos(),item.getyPos());
 
-        Thread.sleep(1500);
+        //Thread.sleep(5000);
+        ArrayList<Message> msg = new ArrayList<>();
 
-        ArrayList<Message> msg = returnMsg("StockCheckReponse");
+        for(int i=0;i<1000000;i++){
+
+        }
+
+        for(int i=0;i<5;i++){
+            Thread.sleep(1000);
+            msg = returnMsg("StockCheckResponse");
+            if(msg.size()!= 0){
+                break;
+            }
+        }
+
 
         if(msg.size()==0){
             System.out.println("No StockCheckRequest response");
             return "none"; //응답을 받은게 없음
         }
 
-        String dstId = findNearVm(msg);
+        String dstId = findNearVm(msg,count);
 
         return dstId; //남에꺼 체크
     }
@@ -317,6 +329,7 @@ public class VM {
             }
         }
         else{
+            System.out.println("dst: "+dst);
             DVMClient client = new DVMClient(vmIp[Integer.parseInt(dst)-1], jsonMsg);
             client.run();
         }
@@ -340,7 +353,7 @@ public class VM {
         return msgList;
     }
 
-    private String findNearVm(ArrayList<Message> msgList) { //returnMsg에서 지정한 type의 메세지를 가져와서 findNearVm에 넣으면 됨.
+    private String findNearVm(ArrayList<Message> msgList, int count) { //returnMsg에서 지정한 type의 메세지를 가져와서 findNearVm에 넣으면 됨.
         //그리고 반환 타입이 int[][]인데 int[]로 바꿈
         // TODO implement here
         int dist = 99 * 99 * 99 * 99;
@@ -349,11 +362,16 @@ public class VM {
         int yPos = -1;
 
         for (int i = 0; i < msgList.size(); i++) {
+            if(msgList.get(i).getMsgDescription().getItemNum()<count){
+                continue;
+            }
+
             int xDiff = msgList.get(i).getMsgDescription().getDvmXCoord() - item.getXpos();
             int yDiff = msgList.get(i).getMsgDescription().getDvmYCoord() - item.getyPos();
             if (xDiff * xDiff * yDiff * yDiff < dist) {
                 dist = xDiff * xDiff * yDiff * yDiff;
-                id = msgList.get(i).getDstID();
+                id = msgList.get(i).getSrcId();
+
                 xPos = msgList.get(i).getMsgDescription().getDvmXCoord();
                 yPos = msgList.get(i).getMsgDescription().getDvmYCoord();
             }
