@@ -38,7 +38,8 @@ public class VM {
     
     private String authCode;
     private String[] vmIp= {"team1","team2","team3","team4","our","team5"};
-    
+    private String srcId ="5";
+
     public int[] getPosition(){
         return this.position;
     }
@@ -292,7 +293,7 @@ public class VM {
 //            msg.setDstID(dst);
 //        }
 
-        msg.setSrcId("5"); //우리 Id는 5로 고정 => 얘도 item에 저장하고 가져오는 식으로 해야하나...? (귀찮음 ㅎㅎ)
+        msg.setSrcId(srcId); //우리 Id는 5로 고정 => 얘도 item에 저장하고 가져오는 식으로 해야하나...? (귀찮음 ㅎㅎ)
         msg.setDstID(dst);
 
         msg.setMsgType(type);
