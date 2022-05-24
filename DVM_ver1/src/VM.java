@@ -35,7 +35,10 @@ public class VM {
     private boolean isValid;
     private int position[];
     private boolean isNone;
+    //"192.168.66.176","192,168.67.11","192.168.67.30","192.168.65.204","our","192.168.64.242"
     private String authCode;
+    private String[] vmIp= {"null","192,168.67.11","null","null","our","null"};
+    private String srcId ="5";
 
     public int[] getPosition(){
         return this.position;
@@ -48,12 +51,6 @@ public class VM {
                     Thread.sleep(3000);
 
                     System.out.println("present msgList size: "+Integer.toString(DVMServer.msgList.size()));
-//                    if(DVMServer.msgList.size()>0){
-//                        for(int i=0;i<DVMServer.msgList.size();i++){
-//                            System.out.println("Type: "+DVMServer.msgList.get(i).getMsgType());
-//                        }
-//                    }
-
 
                     for (int i = 0; i < DVMServer.msgList.size(); i++) {
                         if (DVMServer.msgList.get(i).getMsgType().equals("StockCheckRequest")) { //음료 코드_음료 개수_dst id_dst 좌표
@@ -296,7 +293,7 @@ public class VM {
 //            msg.setDstID(dst);
 //        }
 
-        msg.setSrcId("5"); //우리 Id는 5로 고정 => 얘도 item에 저장하고 가져오는 식으로 해야하나...? (귀찮음 ㅎㅎ)
+        msg.setSrcId(srcId); //우리 Id는 5로 고정 => 얘도 item에 저장하고 가져오는 식으로 해야하나...? (귀찮음 ㅎㅎ)
         msg.setDstID(dst);
 
         msg.setMsgType(type);
@@ -308,9 +305,21 @@ public class VM {
         msg.setMsgDescription(msgDesc);
 
         String jsonMsg = msg2json.message2Json(msg); //msg=>json
-
-        DVMClient client = new DVMClient("192.168.66.135", jsonMsg);
-        client.run();
+        
+        if(dst.equals("0")){
+            for(int i=0;i<vmIp.length;i++){
+                if(vmIp[i].equals("our")||vmIp[i].equals("null")){
+                    continue;
+                }
+                
+                DVMClient client = new DVMClient(vmIp[i], jsonMsg);
+                client.run();
+            }
+        }
+        else{
+            DVMClient client = new DVMClient(vmIp[Integer.parseInt(dst)-1], jsonMsg);
+            client.run();
+        }
     }
 
     private ArrayList<Message> returnMsg(String msgType) { //msgList에서 원하는 타입의 반환값 가져오기 int code, int count, int xPos, int yPos 뺌
@@ -350,12 +359,14 @@ public class VM {
             }
         }
         if (id.equals("null")) { //요청에 대한 리턴 값이 없음.
+            System.out.println("해당 재고를 지닌 vm 없음");
             return null;
         }
 
         this.position[0]=xPos;
         this.position[1]=yPos;
-
+        
+        System.out.println("가장 가까운 id: "+id+"위치: "+Integer.toString(xPos)+", "+Integer.toString(yPos));
 
 
         return id;
