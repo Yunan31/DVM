@@ -37,8 +37,8 @@ public class VM {
     private boolean isNone;
     //"192.168.66.176","192,168.67.11","192.168.67.30","192.168.65.204","our","192.168.64.242"
     private String authCode;
-    private String[] vmIp= {"null","192.168.67.112","null","null","our","null"};
-    private String srcId ="5";
+    private String[] vmIp= {"192.168.66.176","null","null","null","our","null"};
+    private String srcId ="Team5";
 
     public int[] getPosition(){
         return this.position;
@@ -196,7 +196,8 @@ public class VM {
             return "our"; //우리꺼에서 체크
         }
 
-        requestMsg("StockCheckRequest",Integer.toString(code),count,"0","",item.getXpos(),item.getyPos());
+        //System.out.println("보내는 음료 코드 :"+ String.format( "%1$02d" , code));
+        requestMsg("StockCheckRequest",String.format( "%1$02d" , code),count,"0","",item.getXpos(),item.getyPos());
 
         //Thread.sleep(5000);
         ArrayList<Message> msg = new ArrayList<>();
@@ -295,6 +296,10 @@ public class VM {
         Message msg = new Message();
         Message.MessageDescription msgDesc = new Message.MessageDescription();
         Serializer msg2json = new Serializer();
+
+
+        code = String.format( "%1$02d" , Integer.parseInt(code));
+        System.out.println("바꾼 code: "+code);
         //List<Integer> list = item.getVMId();
 
 //        if (type.equals("PrepaymentCheck") || type.equals("SalesCheckResponse")) {
@@ -329,8 +334,11 @@ public class VM {
             }
         }
         else{
-            System.out.println("dst: "+dst);
-            DVMClient client = new DVMClient(vmIp[Integer.parseInt(dst)-1], jsonMsg);
+
+            String tmpDst = Character.toString(dst.charAt(dst.length()-1));
+
+            System.out.println("tmpDst: "+tmpDst);
+            DVMClient client = new DVMClient(vmIp[Integer.parseInt(tmpDst)-1], jsonMsg);
             client.run();
         }
     }
@@ -370,6 +378,7 @@ public class VM {
             int yDiff = msgList.get(i).getMsgDescription().getDvmYCoord() - item.getyPos();
             if (xDiff * xDiff * yDiff * yDiff < dist) {
                 dist = xDiff * xDiff * yDiff * yDiff;
+
                 id = msgList.get(i).getSrcId();
 
                 xPos = msgList.get(i).getMsgDescription().getDvmXCoord();
