@@ -45,18 +45,21 @@ public class Item {
 
     public void setMid(int mid) {
         // TODO implement here
+        System.out.println("Set Manager Id: "+Integer.toString(mid));
         this.mid=mid;
     }
 
 
     public void setVmid(int vmid) {
         // TODO implement here
+        System.out.println("Set vm Id: "+Integer.toString(vmid));
         this.vmid.add(vmid);
     }
 
 
     public void setCard(int cardNum, int cardBalance) {
         // TODO implement here
+        System.out.println("카드 번호: "+Integer.toString(cardNum)+" 카드 잔액: "+Integer.toString(cardBalance));
         this.cardNum=cardNum;
         this.cardBalance=cardBalance;
     }
@@ -64,6 +67,7 @@ public class Item {
 
     public void setItem(int code, int count,int price) {
         // TODO implement here
+        System.out.println("Set Item 코드:  "+Integer.toString(code)+" 개수: "+Integer.toString(count)+"가격: "+Integer.toString(price));
         itemCount[code]=count;
         itemPrice[code]=price;
     }
@@ -94,6 +98,7 @@ public class Item {
 
     public void updateItemStock(int code, int count) { //해당 코드의 카운트만큼 감소
         // TODO implement here
+        System.out.print("code: "+Integer.toString(code)+" count:" +Integer.toString(count)+"만큼 재고 감량");
         int tmpCount = itemCount[code];
         tmpCount -= count;
         itemCount[code]= tmpCount;
@@ -124,6 +129,7 @@ public class Item {
     public boolean checkAuthCode(String authCode) {
         // TODO implement here
         if(!this.authCode.containsKey(authCode)){
+            System.out.println("인증코드 인증 실패");
             return false;
         }
 
@@ -142,12 +148,14 @@ public class Item {
 
     public void deleteAuthCode(String authCode) {
         // TODO implement here
+        System.out.println("인증코드: "+authCode+" 확인 및 삭제 완료");
         this.authCode.remove(authCode);
     }
 
 
     public void update(int code, int count) { //위의 updateItemStock은 ItemOut의 느낌, 얘는 매니징할때 추가하는것. (사실 두개 구분 안해도 됨)
         // TODO implement here
+        System.out.print("code: "+Integer.toString(code)+" count:" +Integer.toString(count)+"만큼 추가하였습니다.");
         itemCount[code]=count;
         //여기선 setup값으로 받아오기 때문에 증감이 아닌 대체.
 

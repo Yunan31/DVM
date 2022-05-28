@@ -108,7 +108,7 @@ class dvm_gui {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(setUp_tf[0].getText().length()!=0)
-                    vm.item.setVmid(Integer.parseInt(setUp_tf[0].getText()));
+                    vm.setVmid(Integer.parseInt(setUp_tf[0].getText()));
                 setUp_tf[0].setText("");
             }
         });
@@ -116,7 +116,7 @@ class dvm_gui {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(setUp_tf[1].getText().length()!=0)
-                    vm.item.setMid(Integer.parseInt(setUp_tf[1].getText()));
+                    vm.setMid(Integer.parseInt(setUp_tf[1].getText()));
                 setUp_tf[1].setText("");
             }
         });
