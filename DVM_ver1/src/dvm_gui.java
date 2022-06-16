@@ -224,6 +224,11 @@ class dvm_gui {
 
         JButton OK_btn = new JButton("OK");
         OK_btn.setBounds(140, 280, 100, 30);
+
+
+        JButton cancel_btn = new JButton("X");
+        cancel_btn.setBounds(30, 280, 100, 30);
+
         OK_btn.addActionListener(new ActionListener() {
             String itemStockCheck="";
             @Override
@@ -241,7 +246,6 @@ class dvm_gui {
                 else if(itemStockCheck.equals("none")){ //요청을 보냈는데 다른 vm에도 없음
                     failureUI();
                     frame.dispose();
-                    //코드 추가 상희상희
                 }
                 else{ //다른 애에 있음
                     position = vm.getPosition();
@@ -250,7 +254,17 @@ class dvm_gui {
                 frame.dispose();
             }
         });
+
+        cancel_btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                selectMode();
+                frame.dispose();
+            }
+        });
+
         frame.add(OK_btn);
+        frame.add(cancel_btn);
 
         for (int i = 0; i < item_buttons.length; i++) {
             item_buttons[i] = new JButton(item_no[i]);

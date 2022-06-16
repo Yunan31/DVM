@@ -17,8 +17,8 @@ public class Item {
     private int mid;
     private int xPos = 5; //새로이 추가된 두 위아래 좌표놈들. setup에서 초기화 안해주므로 임의로 값 집어넣음.
     private int yPos = 10; //이하동문.
-    private int cardNum;
-    private int cardBalance;
+    //private int cardNum;
+    //private int cardBalance;  // cardData로 이동
     private int itemCount[]= new int[21]; //기본 int item[]을 사이즈 20으로 고정 선언, 변수명 변경 (itemPrice에 맞춰서 item => itemCount로)
     private int itemPrice[] = new int[21]; //아예 새로 추가한 항목임, 음료 코드랑 개수는 고려했지만 가격을 고려하지 못해서 추가함.
                                            //이건 그냥 선언과 동시에 초기화 해도 될듯함. (사용자 입력으로 받을 필요성을 느끼지 못함)
@@ -57,12 +57,12 @@ public class Item {
     }
 
 
-    public void setCard(int cardNum, int cardBalance) {
+/*    public void setCard(int cardNum, int cardBalance) {
         // TODO implement here
         System.out.println("카드 번호: "+Integer.toString(cardNum)+" 카드 잔액: "+Integer.toString(cardBalance));
         this.cardNum=cardNum;
         this.cardBalance=cardBalance;
-    }
+    }*/
 
 
     public void setItem(int code, int count,int price) {
@@ -72,6 +72,12 @@ public class Item {
         itemPrice[code]=price;
     }
 
+    public int getItemPrice(int code) {
+        return itemPrice[code];
+    }
+    public int getItemCount(int code) {
+        return itemCount[code];
+    }
 
     public boolean checkItemStock(int code, int count) {
         // TODO implement here
@@ -105,6 +111,9 @@ public class Item {
     }
 
 
+    /*     vm이 이 역할 하는게 맞는 것 같아서 저기로 옮겼어요
+    vm이 카드데이터 객체의 데이터와 아이템 객체의 정보를 가져와서 연산을 한 다음에
+    결과를 내주는게 맞는 듯?
     public boolean checkCard(int cardNum, int code, int count) { //cardNum 이외에 계산해야 하는 값이 필요함. (원래는 인자에 cardNum밖에 없었음)
                                             //1. code, count를 같이 전달해주기
         // TODO implement here
@@ -124,7 +133,7 @@ public class Item {
         System.out.println("잔액 :"+this.cardBalance);    // 테스트용
         return true;
     }
-
+*/
 
     public boolean checkAuthCode(String authCode) {
         // TODO implement here

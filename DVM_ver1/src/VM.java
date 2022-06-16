@@ -12,6 +12,7 @@ import java.util.Scanner;
 public class VM {
 
     Item item = new Item();
+    CardData cardData = new CardData();
     Scanner sc = new Scanner(System.in);
     /**
      * Default constructor
@@ -175,7 +176,7 @@ public class VM {
 
     public void setCard(int cardNum, int cardBalance) {
         // TODO implement here
-        item.setCard(cardNum,cardBalance);
+        cardData.setCard(cardNum,cardBalance);
     }
 
 
@@ -243,9 +244,9 @@ public class VM {
     //인자에 카드번호 추가
     public boolean normalPayment(int cardNum, int code, int count) {
         // TODO implement here
-        isValid = item.checkCard(cardNum, code, count);
+        isValid = checkCard(cardNum, code, count);
         return isValid;
-    }
+    }   // 이거 인자 전달 잘 되는지 확인 상희 > 문제될 건 없어보임?
 
 
 //    private void cancel() {
@@ -451,7 +452,7 @@ public class VM {
 
         else
             return "";
-    }
+    }   //여기도 인자전달 잘 되는지 확인 상희  > 여기도 문제 없을듯
 
 
 //    private void requestCard() {
@@ -462,7 +463,23 @@ public class VM {
 
     private boolean checkCard(int cardNum, int code, int count) { //item에서의 부분과 마찬가지로 인자 축.
         // TODO implement here
-        return item.checkCard(cardNum, code, count);
+        // 여기여기
+        if(cardData.isNotValidCard(cardNum)){
+            System.out.println("카드 번호가 유효하지 않습니다.");
+            return false;
+        }   // 카드번호가 유효함
+
+        if(cardData.getCardBalance()<item.getItemPrice(code)*count){
+            System.out.println("결제 금액 :"+item.getItemPrice(code)*count+", 보유 금액 :"+cardData.getCardBalance());      // 테스트용
+            return false;
+        }   // 결제 요청 금액이 보유 금액보다 큼
+
+        item.updateItemStock(code,count);
+        cardData.withdrawBalance(item.getItemPrice(code)*count);
+
+        System.out.println("잔액 :"+cardData.getCardBalance());
+
+        return true;
     }
 
 
