@@ -36,8 +36,8 @@ public class VM {
     private int position[];
     private boolean isNone;
     //"192.168.66.176","192,168.67.11","192.168.67.30","192.168.65.204","our","192.168.64.242"
-    private String authCode;
-    private String[] vmIp= {"192.168.66.176","null","null","null","our","null"};
+    //private String authCode;
+    private String[] vmIp= {"192.168.157.16","null","null","null","our","null"};
     private String srcId ="Team5";
 
     public int[] getPosition(){
@@ -50,7 +50,7 @@ public class VM {
                 while(true){
                     Thread.sleep(3000);
 
-                    System.out.println("present msgList size: "+Integer.toString(DVMServer.msgList.size()));
+                    //System.out.println("present msgList size: "+Integer.toString(DVMServer.msgList.size()));
 
                     for (int i = 0; i < DVMServer.msgList.size(); i++) {
                         if (DVMServer.msgList.get(i).getMsgType().equals("StockCheckRequest")) { //음료 코드_음료 개수_dst id_dst 좌표
@@ -258,39 +258,39 @@ public class VM {
 //    }
 
 
-    private void msgRequest(String type, String code, int count, String dst, String authCode) throws InterruptedException { //1. int type => string type 2. int code => String code
-        // 3.type string은 추후에 바꿔야함~ 4. 목표 vmID인자로 추가~
-        //5. String authCode 인자로 추가.
-        // TODO implement here
-        // magType = "StockCheckRequest" or "StockCheckResponse" or "PrepaymentCheck" or "SalesCheckRequest" or "SalesCheckResponse
-
-        //이 변수들도 다 추가해야하나...
-        //List<Integer> list = item.getVMId();
-
-        requestMsg(type, code, count, dst, authCode, item.getXpos(), item.getyPos()); //이거 하나로 다 가능해보임. 안돼면 필요 없는 인자갑ㅅ들 ㅣㅂ워주거ㅏㄴ null값으로 바꿔줘야함.
-
-//        if(type.equals("재고 확인 요청")){ //broadcast로 전부 보내야 함.
-//            requestMsg(type,code,count,"0",null,0,0); //dst를 0으로 줘서 broadcast를 보냄.
+//    private void msgRequest(String type, String code, int count, String dst, String authCode) throws InterruptedException { //1. int type => string type 2. int code => String code
+//        // 3.type string은 추후에 바꿔야함~ 4. 목표 vmID인자로 추가~
+//        //5. String authCode 인자로 추가.
+//        // TODO implement here
+//        // magType = "StockCheckRequest" or "StockCheckResponse" or "PrepaymentCheck" or "SalesCheckRequest" or "SalesCheckResponse
 //
-//        }
+//        //이 변수들도 다 추가해야하나...
+//        //List<Integer> list = item.getVMId();
 //
-//        if(type.equals("선결제 확인")){
-//            //전송할 메세지 설정
-//            requestMsg(type,code,count,dst,authCode, item.getXpos(), item.getyPos());
-//        }
+//        requestMsg(type, code, count, dst, authCode, item.getXpos(), item.getyPos()); //이거 하나로 다 가능해보임. 안돼면 필요 없는 인자갑ㅅ들 ㅣㅂ워주거ㅏㄴ null값으로 바꿔줘야함.
 //
-//        if(type.equals("음료 판매 확인")){ //얘도 broadcast라 일단 구현 안함.
-//
-//        }
-//
-//        if(type.equals("재고 확인 응답")){
-//            requestMsg(type,code,count,dst,authCode,item.getXpos(), item.getyPos());
-//        }
-//
-//        if(type.equals("음료 판매 응답")){
-//            requestMsg(type,code,count,dst,authCode,item.getXpos(), item.getyPos());
-//        }
-    }
+////        if(type.equals("재고 확인 요청")){ //broadcast로 전부 보내야 함.
+////            requestMsg(type,code,count,"0",null,0,0); //dst를 0으로 줘서 broadcast를 보냄.
+////
+////        }
+////
+////        if(type.equals("선결제 확인")){
+////            //전송할 메세지 설정
+////            requestMsg(type,code,count,dst,authCode, item.getXpos(), item.getyPos());
+////        }
+////
+////        if(type.equals("음료 판매 확인")){ //얘도 broadcast라 일단 구현 안함.
+////
+////        }
+////
+////        if(type.equals("재고 확인 응답")){
+////            requestMsg(type,code,count,dst,authCode,item.getXpos(), item.getyPos());
+////        }
+////
+////        if(type.equals("음료 판매 응답")){
+////            requestMsg(type,code,count,dst,authCode,item.getXpos(), item.getyPos());
+////        }
+//    }
 
     private void requestMsg(String type, String code, int count, String dst, String authCode, int xPos, int yPos) throws InterruptedException {
         Message msg = new Message();
@@ -573,10 +573,7 @@ public class VM {
 //    }
 
 
-    public void manageStock(int code, int count) { //인자 두개 추가.
-        // TODO implement here
-        item.update(code, count);
-    }
+
 
 
 //    private void showManageStock() {
@@ -585,7 +582,7 @@ public class VM {
 
 
     //private -> public
-    public void update(int code, int count) {
+    public void update(int code, int count) { //managestock
         // TODO implement here
         item.update(code, count);
     }
