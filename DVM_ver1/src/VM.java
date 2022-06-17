@@ -13,7 +13,10 @@ public class VM {
 
     Item item = new Item();
     CardData cardData = new CardData();
+    AuthcodeData authcode = new AuthcodeData();
+    VMData vmData = new VMData();
     Scanner sc = new Scanner(System.in);
+
     /**
      * Default constructor
      */
@@ -38,8 +41,11 @@ public class VM {
     private boolean isNone;
     //"192.168.66.176","192,168.67.11","192.168.67.30","192.168.65.204","our","192.168.64.242"
     //private String authCode;
+    /*
     private String[] vmIp= {"192.168.157.16","null","null","null","our","null"};
     private String srcId ="Team5";
+    VMData로 이동
+     */
 
     public int[] getPosition(){
         return this.position;
@@ -64,9 +70,10 @@ public class VM {
 
                                 if(item.checkItemStock(checkCode, checkNum)){
                                     System.out.println("request StockCheckResponse start");
-                                    requestMsg("StockCheckResponse",Integer.toString(checkCode),checkNum,msg.get(j).getSrcId(),"",item.getXpos(),item.getyPos());
+                                    requestMsg("StockCheckResponse",Integer.toString(checkCode),checkNum,msg.get(j).getSrcId(),"",vmData.getXpos(),vmData.getyPos());
                                     System.out.println("request StockCheckResponse done");
                                 }
+                                //여기여기여기여기
 
                             }
                             continue;
@@ -80,7 +87,7 @@ public class VM {
 
                                 if(item.checkItemStock(checkCode, checkNum)){
                                     System.out.println("request SalesCheckResponse start");
-                                    requestMsg("SalesCheckResponse",Integer.toString(checkCode),0,msg.get(j).getSrcId(),"",item.getXpos(),item.getyPos());
+                                    requestMsg("SalesCheckResponse",Integer.toString(checkCode),0,msg.get(j).getSrcId(),"",vmData.getXpos(),vmData.getyPos());
                                     System.out.println("request SalesCheckResponse done");
                                 }
 
@@ -93,6 +100,8 @@ public class VM {
                             for(int j=0;j<msg.size();j++){
                                 System.out.println("insertAuthCode start");
                                 insertAuthCode(Integer.parseInt(msg.get(j).getMsgDescription().getItemCode()),msg.get(j).getMsgDescription().getItemNum(),msg.get(j).getMsgDescription().getAuthCode());
+                                item.updateItemStock(Integer.parseInt(msg.get(j).getMsgDescription().getItemCode()),msg.get(j).getMsgDescription().getItemNum());
+                                // 남의 기계에서 선결제
                                 System.out.println("insertAuthCode done");
                             }
                             continue;
@@ -164,7 +173,7 @@ public class VM {
 
     public void setVmid(int vmid) {
         // TODO implement here
-        item.setVmid(vmid);
+        vmData.setVmid(vmid);
     }
 
 
@@ -198,7 +207,8 @@ public class VM {
         }
 
         //System.out.println("보내는 음료 코드 :"+ String.format( "%1$02d" , code));
-        requestMsg("StockCheckRequest",String.format( "%1$02d" , code),count,"0","",item.getXpos(),item.getyPos());
+        requestMsg("StockCheckRequest",String.format( "%1$02d" , code),count,"0","",vmData.getXpos(),vmData.getyPos());
+        System.out.println("sending StockCheckResponse");
 
         //Thread.sleep(5000);
         ArrayList<Message> msg = new ArrayList<>();
@@ -210,6 +220,7 @@ public class VM {
         for(int i=0;i<5;i++){
             Thread.sleep(1000);
             msg = returnMsg("StockCheckResponse");
+            System.out.println("checking StockCheckResponse");
             if(msg.size()!= 0){
                 break;
             }
@@ -311,7 +322,7 @@ public class VM {
 //            msg.setDstID(dst);
 //        }
 
-        msg.setSrcId(srcId); //우리 Id는 5로 고정 => 얘도 item에 저장하고 가져오는 식으로 해야하나...? (귀찮음 ㅎㅎ)
+        msg.setSrcId(vmData.srcId); //우리 Id는 5로 고정 => 얘도 item에 저장하고 가져오는 식으로 해야하나...? (귀찮음 ㅎㅎ)
         msg.setDstID(dst);
 
         msg.setMsgType(type);
@@ -325,12 +336,12 @@ public class VM {
         String jsonMsg = msg2json.message2Json(msg); //msg=>json
         
         if(dst.equals("0")){
-            for(int i=0;i<vmIp.length;i++){
-                if(vmIp[i].equals("our")||vmIp[i].equals("null")){
+            for(int i=0;i< vmData.getVmIpLength();i++){
+                if(vmData.getVmIp(i).equals("our")||vmData.getVmIp(i).equals("null")){
                     continue;
                 }
                 
-                DVMClient client = new DVMClient(vmIp[i], jsonMsg);
+                DVMClient client = new DVMClient(vmData.getVmIp(i), jsonMsg);
                 client.run();
             }
         }
@@ -339,7 +350,7 @@ public class VM {
             String tmpDst = Character.toString(dst.charAt(dst.length()-1));
 
             System.out.println("tmpDst: "+tmpDst);
-            DVMClient client = new DVMClient(vmIp[Integer.parseInt(tmpDst)-1], jsonMsg);
+            DVMClient client = new DVMClient(vmData.getVmIp(Integer.parseInt(tmpDst)-1), jsonMsg);
             client.run();
         }
     }
@@ -355,10 +366,7 @@ public class VM {
                 DVMServer.msgList.remove(i);
                 i--;
             }
-
-
         }
-
         return msgList;
     }
 
@@ -375,8 +383,8 @@ public class VM {
                 continue;
             }
 
-            int xDiff = msgList.get(i).getMsgDescription().getDvmXCoord() - item.getXpos();
-            int yDiff = msgList.get(i).getMsgDescription().getDvmYCoord() - item.getyPos();
+            int xDiff = msgList.get(i).getMsgDescription().getDvmXCoord() - vmData.getXpos();
+            int yDiff = msgList.get(i).getMsgDescription().getDvmYCoord() - vmData.getyPos();
             if (xDiff * xDiff * yDiff * yDiff < dist) {
                 dist = xDiff * xDiff * yDiff * yDiff;
 
@@ -418,7 +426,7 @@ public class VM {
 
     private void insertAuthCode(int code, int count, String authCode) {
         // TODO implement here
-        item.insertAuthCode(code, count, authCode);
+        authcode.insertAuthCode(code, count, authCode);
     }
 
 
@@ -446,9 +454,10 @@ public class VM {
         isValid = checkCard(cardNum, code, count);
         if(isValid){
             String authCode =createAuthCode();
-            requestMsg("PrepaymentCheck" ,Integer.toString(code), count,dstId,authCode,item.getXpos(),item.getyPos()); //dst
+            requestMsg("PrepaymentCheck" ,Integer.toString(code), count,dstId,authCode,vmData.getXpos(),vmData.getyPos()); //dst
             return authCode;
         }
+
 
         else
             return "";
@@ -474,8 +483,9 @@ public class VM {
             return false;
         }   // 결제 요청 금액이 보유 금액보다 큼
 
-        item.updateItemStock(code,count);
+
         cardData.withdrawBalance(item.getItemPrice(code)*count);
+
 
         System.out.println("잔액 :"+cardData.getCardBalance());
 
@@ -514,7 +524,7 @@ public class VM {
     //private -> public
     public boolean checkAuthCode(String authCode) {
         // TODO implement here
-        return item.checkAuthCode(authCode);
+        return authcode.checkAuthCode(authCode);
     }
 
     public void setItem(int code, int count, int price){

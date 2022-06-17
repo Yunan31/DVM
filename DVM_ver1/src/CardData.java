@@ -1,7 +1,5 @@
 public class CardData {
-
     public CardData(){
-
     }
 
     private int cardNum;

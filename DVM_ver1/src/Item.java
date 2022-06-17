@@ -15,10 +15,14 @@ public class Item {
 
     private List<Integer> vmid = new ArrayList<>(); //int [] => list<int>로 형변환
     private int mid;
-    private int xPos = 5; //새로이 추가된 두 위아래 좌표놈들. setup에서 초기화 안해주므로 임의로 값 집어넣음.
+    /*    private int xPos = 5; //새로이 추가된 두 위아래 좌표놈들. setup에서 초기화 안해주므로 임의로 값 집어넣음.
     private int yPos = 10; //이하동문.
-    //private int cardNum;
-    //private int cardBalance;  // cardData로 이동
+    VMData로 이동
+    */
+    /*private int cardNum;
+    private int cardBalance;
+    cardData로 이동
+    */
     private int itemCount[]= new int[21]; //기본 int item[]을 사이즈 20으로 고정 선언, 변수명 변경 (itemPrice에 맞춰서 item => itemCount로)
     private int itemPrice[] = new int[21]; //아예 새로 추가한 항목임, 음료 코드랑 개수는 고려했지만 가격을 고려하지 못해서 추가함.
                                            //이건 그냥 선언과 동시에 초기화 해도 될듯함. (사용자 입력으로 받을 필요성을 느끼지 못함)
@@ -33,6 +37,7 @@ public class Item {
         return this.vmid;
     }
 
+/*
     public int getXpos(){ //위에 새로이 추가하면서 추가된 놈
         return this.xPos;
     }
@@ -40,6 +45,8 @@ public class Item {
     public int getyPos(){//위에 새로이 추가하면서 추가된 놈
         return this.yPos;
     }
+    VMData로 이동
+*/
 
     public int getMid() { return this.mid; }
 
@@ -50,14 +57,16 @@ public class Item {
     }
 
 
-    public void setVmid(int vmid) {
+    /*    public void setVmid(int vmid) {
         // TODO implement here
         System.out.println("Set vm Id: "+Integer.toString(vmid));
         this.vmid.add(vmid);
     }
+     VMData로 이동
+*/
 
 
-/*    public void setCard(int cardNum, int cardBalance) {
+    /*    public void setCard(int cardNum, int cardBalance) {
         // TODO implement here
         System.out.println("카드 번호: "+Integer.toString(cardNum)+" 카드 잔액: "+Integer.toString(cardBalance));
         this.cardNum=cardNum;
@@ -93,13 +102,15 @@ public class Item {
     }
 
 
-    public void insertAuthCode(int code, int count, String authCode) { //msg로 들어온 값 받아와서 해시맵에 저장
+    /*    public void insertAuthCode(int code, int count, String authCode) { //msg로 들어온 값 받아와서 해시맵에 저장
         // TODO implement here
         String items = Integer.toString(code);
         items += " "+ Integer.toString(count);
         this.authCode.put(authCode,items);
         System.out.println("insert authCode: "+authCode + "items: "+items);
     }
+        AuthcodeData로 이동
+ */
 
 
     public void updateItemStock(int code, int count) { //해당 코드의 카운트만큼 감소
@@ -135,7 +146,7 @@ public class Item {
     }
 */
 
-    public boolean checkAuthCode(String authCode) {
+    /*    public boolean checkAuthCode(String authCode) {
         // TODO implement here
         if(!this.authCode.containsKey(authCode)){
             System.out.println("인증코드 인증 실패");
@@ -153,13 +164,17 @@ public class Item {
 
         return true;
     }
+    AuthcodeData로 이동
+ */
 
 
-    public void deleteAuthCode(String authCode) {
+    /*    public void deleteAuthCode(String authCode) {
         // TODO implement here
         System.out.println("인증코드: "+authCode+" 확인 및 삭제 완료");
         this.authCode.remove(authCode);
     }
+    AuthcodeData로 이동
+*/
 
 
     public void update(int code, int count) { //위의 updateItemStock은 ItemOut의 느낌, 얘는 매니징할때 추가하는것. (사실 두개 구분 안해도 됨)

@@ -3,7 +3,7 @@
     <output-path>$PROJECT_DIR$/out/artifacts/DVM_ver1_jar</output-path>
     <root id="archive" name="DVM_ver1.jar">
       <element id="module-output" name="DVM_ver1" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/lib/dvm_network_jdk11_v0.9.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/dvm_network_JDK11.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

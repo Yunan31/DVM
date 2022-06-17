@@ -13,6 +13,10 @@ class dvm_gui {
     private int[] payItem = new int[2];
     //안내에 쓰이는 other VM 좌표
     private int[] position = new int[2];
+
+    int gui_flag = 0;   // set other DVM gui화면 닫힌거 확인용
+    // 1이 추가화면 open, 0이 closed
+
     dvm_gui(){
         vm = new VM();
         try {
@@ -63,7 +67,7 @@ class dvm_gui {
         frame.add(selectMode_prepay_btn);
         frame.add(selectMode_manager_btn);
 
-        frame.setLocationRelativeTo(null);  // ?? 제 노트북이 문제인지 가운데로 안가네요,,,;; - 상희
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
@@ -73,7 +77,7 @@ class dvm_gui {
         frame.setResizable(false);
 
         final String[] setUp_menus = {
-                "Other DVM ID",
+                //"Other DVM ID",
                 "Manager ID",
                 "카드 번호",
                 "카드 잔액",
@@ -81,24 +85,24 @@ class dvm_gui {
                 "음료 개수",
                 "음료 가격"
         };
-        JLabel[] setUp_menu_label = new JLabel[7];
-        JTextField[] setUp_tf = new JTextField[7];
+        JLabel[] setUp_menu_label = new JLabel[6];
+        JTextField[] setUp_tf = new JTextField[6];
         frame.setTitle("set up");
         frame.setSize(500, 500);
         frame.setLayout(null);
 
         for (int i = 0; i < setUp_menus.length; i++) {
             setUp_menu_label[i] = new JLabel(setUp_menus[i]);
-            setUp_menu_label[i].setBounds(60, i * 50 + 30, 100, 30);
+            setUp_menu_label[i].setBounds(60, i * 50 + 90, 100, 30);
             setUp_menu_label[i].setHorizontalAlignment(JLabel.RIGHT);
             setUp_tf[i] = new JTextField("");
-            setUp_tf[i].setBounds(190, i * 50 + 30, 150, 30);
+            setUp_tf[i].setBounds(190, i * 50 + 90, 150, 30);
 
             frame.add(setUp_menu_label[i]);
             frame.add(setUp_tf[i]);
         }
 
-        JButton checkA = new JButton("V");
+        JButton checkA = new JButton("set other DVM");
         JButton checkB = new JButton("V");
         JButton checkCD = new JButton("V");
         JButton checkEFG = new JButton("V");
@@ -106,9 +110,8 @@ class dvm_gui {
         checkA.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(setUp_tf[0].getText().length()!=0)
-                    vm.setVmid(Integer.parseInt(setUp_tf[0].getText()));
-                setUp_tf[0].setText("");
+                gui_flag = 1;
+                setOtherVM();
             }
         });
         checkB.addActionListener(new ActionListener() {
@@ -148,10 +151,10 @@ class dvm_gui {
             }
         });
 
-        checkA.setBounds(350, 30, 50, 30);
-        checkB.setBounds(350, 80, 50, 30);
-        checkCD.setBounds(350, 160, 50, 30);
-        checkEFG.setBounds(350, 280, 50, 30);
+        checkA.setBounds(100, 30, 200, 30);
+        checkB.setBounds(350, 140, 50, 30);
+        checkCD.setBounds(350, 220, 50, 30);
+        checkEFG.setBounds(350, 340, 50, 30);
 
         frame.add(checkA);
         frame.add(checkB);
@@ -166,8 +169,112 @@ class dvm_gui {
                 frame.dispose();
             }
         });
-        setUp_OK.setBounds(200, 380, 100, 30);
+        setUp_OK.setBounds(200, 400, 100, 30);
         frame.add(setUp_OK);
+
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }
+
+    public void setOtherVM() {
+        JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+
+        frame.setTitle("select other DVM");
+        frame.setSize(500, 500);
+        frame.setLayout(null);
+
+
+        JLabel settingDone_label = new JLabel("설정 완료");
+        settingDone_label.setBounds(100, 160, 300, 30);
+        frame.add(settingDone_label);
+
+        JTextArea settingDone_ta = new JTextArea(1,6);
+        settingDone_ta.setBounds(100, 200, 300, 200);
+        settingDone_ta.setEditable(false);
+        settingDone_ta.setLineWrap(true);
+        frame.add(settingDone_ta);
+
+
+        JLabel setID_label = new JLabel("DVM ID");
+        setID_label.setBounds(100, 30, 80, 30);
+        frame.add(setID_label);
+
+        JTextField setID_tf = new JTextField("");
+        setID_tf.setBounds(200, 30, 100, 30);
+        frame.add(setID_tf);
+
+/*      JLabel setIP_label = new JLabel("IP");
+        setIP_label.setBounds(100, 90, 80, 30);
+        frame.add(setIP_label);
+
+        JTextField setIP_tf = new JTextField("");
+        setIP_tf.setBounds(200, 90, 100, 30);
+        frame.add(setIP_tf);
+
+    ip는 진짜로 그냥 고정하는게 어때요.....
+    */
+
+        JLabel setXpos_label = new JLabel("이 자판기의 X 좌표 : ");
+        setXpos_label.setBounds(50, 70, 150, 30);
+        frame.add(setXpos_label);
+
+        JTextField setXpos_tf = new JTextField("");
+        setXpos_tf.setBounds(210, 70, 60, 30);
+        frame.add(setXpos_tf);
+
+        JLabel setYpos_label = new JLabel("이 자판기의 Y 좌표 : ");
+        setYpos_label.setBounds(50, 110, 150, 30);
+        frame.add(setYpos_label);
+
+        JTextField setYpos_tf = new JTextField("");
+        setYpos_tf.setBounds(210, 110, 60, 30);
+        frame.add(setYpos_tf);
+
+
+
+        JButton check_btn = new JButton("V");
+        check_btn.setBounds(350, 30, 50, 30);
+        check_btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(setID_tf.getText().length()!=0)
+                {
+                    vm.setVmid(Integer.parseInt(setID_tf.getText()));
+                    settingDone_ta.append(setID_tf.getText()+" dvm set\n");
+                }
+                setID_tf.setText("");
+            }
+        });
+        frame.add(check_btn);
+
+        JButton OK_btn = new JButton("OK");
+        OK_btn.setBounds(260, 420, 100, 30);
+
+
+        JButton cancel_btn = new JButton("X");
+        cancel_btn.setBounds(140, 420, 100, 30);
+
+        OK_btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if((setXpos_tf.getText().length()!=0)&&(setYpos_tf.getText().length()!=0)){
+                    vm.vmData.setXYPos(Integer.parseInt(setXpos_tf.getText()),Integer.parseInt(setYpos_tf.getText()));
+                    frame.dispose();
+                }
+            }
+        });
+
+        cancel_btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+            }
+        });
+
+        frame.add(OK_btn);
+        frame.add(cancel_btn);
 
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
@@ -191,13 +298,25 @@ class dvm_gui {
         frame.setLayout(null);
 
         JLabel chosen_label = new JLabel("선택 항목");
-        chosen_label.setBounds(350, 135, 100, 30);
+        chosen_label.setBounds(280, 135, 100, 30);
         frame.add(chosen_label);
 
         JTextArea chosen_ta = new JTextArea("");
-        chosen_ta.setBounds(300, 170, 200, 180);
+        chosen_ta.setBounds(280, 170, 200, 180);
         chosen_ta.setEditable(false);
         frame.add(chosen_ta);
+
+        // 현재 보유중인 재고수량 출력
+        JLabel current_stock_label = new JLabel("재고 현황");
+        current_stock_label.setBounds(500, 135, 100, 30);
+        frame.add(current_stock_label);
+
+        JTextArea current_stock_ta = new JTextArea("");
+        current_stock_ta.setBounds(500, 170, 200, 180);
+        current_stock_ta.setEditable(false);
+        frame.add(current_stock_ta);
+
+        //현재 보유중인 재고수량 출력
 
         JLabel quant_label = new JLabel("개수");
         quant_label.setBounds(20, 200, 50, 30);
@@ -266,6 +385,8 @@ class dvm_gui {
         frame.add(OK_btn);
         frame.add(cancel_btn);
 
+
+
         for (int i = 0; i < item_buttons.length; i++) {
             item_buttons[i] = new JButton(item_no[i]);
             if (i < 10) {
@@ -278,6 +399,11 @@ class dvm_gui {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     code[0] = finalI+1;
+                    System.out.println(finalI+1+"번 선택");    //테스트용
+                    int currentStock = vm.item.getItemCount(finalI+1);
+                    current_stock_ta.setText((finalI+1)+ "번 음료는 현재 : " + currentStock +"개 있습니다.");
+                    //가격 알려주는건 시간 나면 하죠! - 상히
+
                 }
             });
             frame.add(item_buttons[i]);
