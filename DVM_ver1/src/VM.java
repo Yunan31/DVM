@@ -175,6 +175,10 @@ public class VM {
         // TODO implement here
         vmData.setVmid(vmid);
     }
+    public void setVmIp(int vmid, String ip) {
+        // TODO implement here
+            vmData.setVmIp(vmid-1,ip);
+    }
 
 
     public void setMid(int mid) {

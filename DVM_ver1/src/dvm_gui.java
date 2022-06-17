@@ -14,8 +14,6 @@ class dvm_gui {
     //안내에 쓰이는 other VM 좌표
     private int[] position = new int[2];
 
-    int gui_flag = 0;   // set other DVM gui화면 닫힌거 확인용
-    // 1이 추가화면 open, 0이 closed
 
     dvm_gui(){
         vm = new VM();
@@ -102,61 +100,61 @@ class dvm_gui {
             frame.add(setUp_tf[i]);
         }
 
-        JButton checkA = new JButton("set other DVM");
+        JButton setOtherDvm_btn = new JButton("set other DVM");
         JButton checkB = new JButton("V");
         JButton checkCD = new JButton("V");
         JButton checkEFG = new JButton("V");
 
-        checkA.addActionListener(new ActionListener() {
+
+        setOtherDvm_btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gui_flag = 1;
                 setOtherVM();
             }
         });
         checkB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(setUp_tf[1].getText().length()!=0)
+                if(setUp_tf[0].getText().length()!=0)
                     vm.setMid(Integer.parseInt(setUp_tf[1].getText()));
-                setUp_tf[1].setText("");
+                setUp_tf[0].setText("");
             }
         });
         checkCD.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(setUp_tf[2].getText().length()!=0&&setUp_tf[3].getText().length()!=0)
+                if(setUp_tf[1].getText().length()!=0&&setUp_tf[2].getText().length()!=0)
                     vm.setCard(
-                            Integer.parseInt(setUp_tf[2].getText()),
-                            Integer.parseInt(setUp_tf[3].getText())
+                            Integer.parseInt(setUp_tf[1].getText()),
+                            Integer.parseInt(setUp_tf[2].getText())
                     );
+                setUp_tf[1].setText("");
                 setUp_tf[2].setText("");
-                setUp_tf[3].setText("");
             }
         });
         checkEFG.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int checkItemInputs = setUp_tf[4].getText().length() * setUp_tf[5].getText().length() * setUp_tf[6].getText().length();
+                int checkItemInputs = setUp_tf[3].getText().length() * setUp_tf[4].getText().length() * setUp_tf[6].getText().length();
                 if(checkItemInputs!=0)
                     vm.setItem(
-                            Integer.parseInt(setUp_tf[4].getText()),
+                            Integer.parseInt(setUp_tf[3].getText()),
                             // 이렇게 1 빼면 배열 인덱스 =/= 음료코드인데 이렇게 가도 ㄱㅊ? - 상희
-                            Integer.parseInt(setUp_tf[5].getText()),
-                            Integer.parseInt(setUp_tf[6].getText())
+                            Integer.parseInt(setUp_tf[4].getText()),
+                            Integer.parseInt(setUp_tf[5].getText())
                     );
+                setUp_tf[3].setText("");
                 setUp_tf[4].setText("");
                 setUp_tf[5].setText("");
-                setUp_tf[6].setText("");
             }
         });
 
-        checkA.setBounds(100, 30, 200, 30);
-        checkB.setBounds(350, 140, 50, 30);
-        checkCD.setBounds(350, 220, 50, 30);
-        checkEFG.setBounds(350, 340, 50, 30);
+        setOtherDvm_btn.setBounds(100, 30, 200, 30);
+        checkB.setBounds(350, 90, 50, 30);
+        checkCD.setBounds(350, 165, 50, 30);
+        checkEFG.setBounds(350, 290, 50, 30);
 
-        frame.add(checkA);
+        frame.add(setOtherDvm_btn);
         frame.add(checkB);
         frame.add(checkCD);
         frame.add(checkEFG);
@@ -187,64 +185,64 @@ class dvm_gui {
 
 
         JLabel settingDone_label = new JLabel("설정 완료");
-        settingDone_label.setBounds(100, 160, 300, 30);
+        settingDone_label.setBounds(100, 200, 300, 30);
         frame.add(settingDone_label);
 
         JTextArea settingDone_ta = new JTextArea(1,6);
-        settingDone_ta.setBounds(100, 200, 300, 200);
+        settingDone_ta.setBounds(100, 240, 300, 150);
         settingDone_ta.setEditable(false);
         settingDone_ta.setLineWrap(true);
         frame.add(settingDone_ta);
 
 
         JLabel setID_label = new JLabel("DVM ID");
-        setID_label.setBounds(100, 30, 80, 30);
+        setID_label.setBounds(100, 90, 80, 30);
         frame.add(setID_label);
 
         JTextField setID_tf = new JTextField("");
-        setID_tf.setBounds(200, 30, 100, 30);
+        setID_tf.setBounds(200, 90, 100, 30);
         frame.add(setID_tf);
 
-/*      JLabel setIP_label = new JLabel("IP");
-        setIP_label.setBounds(100, 90, 80, 30);
+      JLabel setIP_label = new JLabel("IP");
+        setIP_label.setBounds(100, 130, 80, 30);
         frame.add(setIP_label);
 
         JTextField setIP_tf = new JTextField("");
-        setIP_tf.setBounds(200, 90, 100, 30);
+        setIP_tf.setBounds(200, 130, 100, 30);
         frame.add(setIP_tf);
 
-    ip는 진짜로 그냥 고정하는게 어때요.....
-    */
-
         JLabel setXpos_label = new JLabel("이 자판기의 X 좌표 : ");
-        setXpos_label.setBounds(50, 70, 150, 30);
+        setXpos_label.setBounds(30, 30, 130, 30);
         frame.add(setXpos_label);
 
         JTextField setXpos_tf = new JTextField("");
-        setXpos_tf.setBounds(210, 70, 60, 30);
+        setXpos_tf.setBounds(160, 30, 50, 30);
         frame.add(setXpos_tf);
 
         JLabel setYpos_label = new JLabel("이 자판기의 Y 좌표 : ");
-        setYpos_label.setBounds(50, 110, 150, 30);
+        setYpos_label.setBounds(230, 30, 130, 30);
         frame.add(setYpos_label);
 
         JTextField setYpos_tf = new JTextField("");
-        setYpos_tf.setBounds(210, 110, 60, 30);
+        setYpos_tf.setBounds(360, 30, 50, 30);
         frame.add(setYpos_tf);
 
 
 
         JButton check_btn = new JButton("V");
-        check_btn.setBounds(350, 30, 50, 30);
+        check_btn.setBounds(350, 110, 50, 30);
         check_btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(setID_tf.getText().length()!=0)
+                if(setID_tf.getText().length()!=0 && setIP_tf.getText().length()!=0)
                 {
                     vm.setVmid(Integer.parseInt(setID_tf.getText()));
-                    settingDone_ta.append(setID_tf.getText()+" dvm set\n");
+                    vm.setVmIp(Integer.parseInt(setID_tf.getText()),setIP_tf.getText());
+                    settingDone_ta.append("id : Team" + setID_tf.getText());
+                    settingDone_ta.append("    ip : " + setIP_tf.getText()+" dvm set\n");
                 }
                 setID_tf.setText("");
+                setIP_tf.setText("");
             }
         });
         frame.add(check_btn);

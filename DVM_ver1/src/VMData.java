@@ -26,6 +26,14 @@ public class VMData {
         System.out.println("Set vm Id: "+vmid);
         this.vmid.add(vmid);
     }
+    public void setVmIp(int index, String Ip){
+        vmIp[index] = Ip;
+
+        for(int i=0;i<vmIp.length;i++){
+            System.out.print(vmIp[i] );
+        }
+        System.out.print("\n");
+    }
 
     public int getVmIpLength(){
         return this.vmIp.length;
