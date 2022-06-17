@@ -40,7 +40,4 @@ public class AuthcodeData {
         System.out.println("인증코드: "+authCode+" 확인 및 삭제 완료");
         this.authCode.remove(authCode);
     }
-
-
-
 }

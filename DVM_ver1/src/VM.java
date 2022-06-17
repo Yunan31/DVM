@@ -3,9 +3,7 @@ import DVM_Server.DVMServer;
 import GsonConverter.Serializer;
 import Model.Message;
 
-import javax.swing.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -50,6 +48,7 @@ public class VM {
     public int[] getPosition(){
         return this.position;
     }
+
     private class Thread2 extends Thread{
         @Override
         public void run(){
@@ -122,54 +121,12 @@ public class VM {
         return itemStockCheck;
     }
 
-//    public void start() throws InterruptedException { //초기에 vm시작할때 시작되어야함. 새로 추가한것.
-//       // setup();
-//
-//
-//        Thread2 thread = new Thread2();
-//        thread.start();
-//
-//
-//        Thread.sleep(3000);
-//    }
-
-//    private void showMenu() {
-//        // TODO implement here
-//
-//    }
-
-
-//    private void getPrepayment() {
-//        // TODO implement here
-//    }
-
-
-//    private void readAuthenticationCode() {
-//        // TODO implement here
-//    }
-
-
-//    private void managerAccess() {
-//        // TODO implement here
-//    }
-
-
-//    private void showInputManagerAuthCode() {
-//        // TODO implement here
-//    }
-
 
     //private -> public
     public boolean checkManagerAccess(int code) {
         // TODO implement here
         return code == item.getMid();
     }
-
-
-//    private void showSetUp() {
-//
-//    }
-
 
     public void setVmid(int vmid) {
         // TODO implement here
@@ -191,17 +148,6 @@ public class VM {
         // TODO implement here
         cardData.setCard(cardNum,cardBalance);
     }
-
-
-//    private void done() {
-//        // TODO implement here
-//    }
-
-
-//    private void selectMode() {
-//        // TODO implement here
-//    }
-
 
     private String checkItemStock(int code, int count) throws InterruptedException { //
         // TODO implement here
@@ -263,51 +209,6 @@ public class VM {
         return isValid;
     }   // 이거 인자 전달 잘 되는지 확인 상희 > 문제될 건 없어보임?
 
-
-//    private void cancel() {
-//        // TODO implement here
-//    }
-
-
-//    private void reset() {
-//        // TODO implement here
-//    }
-
-
-//    private void msgRequest(String type, String code, int count, String dst, String authCode) throws InterruptedException { //1. int type => string type 2. int code => String code
-//        // 3.type string은 추후에 바꿔야함~ 4. 목표 vmID인자로 추가~
-//        //5. String authCode 인자로 추가.
-//        // TODO implement here
-//        // magType = "StockCheckRequest" or "StockCheckResponse" or "PrepaymentCheck" or "SalesCheckRequest" or "SalesCheckResponse
-//
-//        //이 변수들도 다 추가해야하나...
-//        //List<Integer> list = item.getVMId();
-//
-//        requestMsg(type, code, count, dst, authCode, item.getXpos(), item.getyPos()); //이거 하나로 다 가능해보임. 안돼면 필요 없는 인자갑ㅅ들 ㅣㅂ워주거ㅏㄴ null값으로 바꿔줘야함.
-//
-////        if(type.equals("재고 확인 요청")){ //broadcast로 전부 보내야 함.
-////            requestMsg(type,code,count,"0",null,0,0); //dst를 0으로 줘서 broadcast를 보냄.
-////
-////        }
-////
-////        if(type.equals("선결제 확인")){
-////            //전송할 메세지 설정
-////            requestMsg(type,code,count,dst,authCode, item.getXpos(), item.getyPos());
-////        }
-////
-////        if(type.equals("음료 판매 확인")){ //얘도 broadcast라 일단 구현 안함.
-////
-////        }
-////
-////        if(type.equals("재고 확인 응답")){
-////            requestMsg(type,code,count,dst,authCode,item.getXpos(), item.getyPos());
-////        }
-////
-////        if(type.equals("음료 판매 응답")){
-////            requestMsg(type,code,count,dst,authCode,item.getXpos(), item.getyPos());
-////        }
-//    }
-
     private void requestMsg(String type, String code, int count, String dst, String authCode, int xPos, int yPos) throws InterruptedException {
         Message msg = new Message();
         Message.MessageDescription msgDesc = new Message.MessageDescription();
@@ -316,15 +217,6 @@ public class VM {
 
         code = String.format( "%1$02d" , Integer.parseInt(code));
         System.out.println("바꾼 code: "+code);
-        //List<Integer> list = item.getVMId();
-
-//        if (type.equals("PrepaymentCheck") || type.equals("SalesCheckResponse")) {
-//            msg.setSrcId(dst); //우리 Id는 5로 고정 => 얘도 item에 저장하고 가져오는 식으로 해야하나...? (귀찮음 ㅎㅎ)
-//            msg.setDstID("5");
-//        } else {
-//            msg.setSrcId("5"); //우리 Id는 5로 고정 => 얘도 item에 저장하고 가져오는 식으로 해야하나...? (귀찮음 ㅎㅎ)
-//            msg.setDstID(dst);
-//        }
 
         msg.setSrcId(vmData.srcId); //우리 Id는 5로 고정 => 얘도 item에 저장하고 가져오는 식으로 해야하나...? (귀찮음 ㅎㅎ)
         msg.setDstID(dst);
@@ -412,41 +304,10 @@ public class VM {
         return id;
     }
 
-
-//    private void getCountMsg(int code, int count) {//msg관련된거  requestMsg, returnMsg로 퉁
-//        // TODO implement here
-//
-//
-//    }
-
-
-
-
-//
-//    private void getPrePayMsg(int code, int count, String authCode) { //msg관련된거 위에 두개로 퉁
-//        // TODO implement here
-//    }
-
-
     private void insertAuthCode(int code, int count, String authCode) {
         // TODO implement here
         authcode.insertAuthCode(code, count, authCode);
     }
-
-
-//    private void getItemSaleMsg(int code, int count) { //msg관련된거 위에 두개로 퉁
-//        // TODO implement here
-//    }
-//
-//
-//    private void returnItemsSaleCheckMsg(int code, int xPos, int yPos) { //msg관련된거 위에 두개로 퉁
-//        // TODO implement here
-//    }
-//
-//
-//    private void showOtherVm() {
-//        // TODO implement here
-//    }
 
 
     //private -> public
@@ -466,12 +327,6 @@ public class VM {
         else
             return "";
     }   //여기도 인자전달 잘 되는지 확인 상희  > 여기도 문제 없을듯
-
-
-//    private void requestCard() {
-//        // TODO implement here
-//
-//    }
 
 
     private boolean checkCard(int cardNum, int code, int count) { //item에서의 부분과 마찬가지로 인자 축.
@@ -515,16 +370,6 @@ public class VM {
     }
 
 
-//    private void showAuthcode(String authCode) {
-//        // TODO implement here
-//    }
-//
-//
-//    private void showInputPreAuthcode() {
-//        // TODO implement here
-//    }
-
-
     //private -> public
     public boolean checkAuthCode(String authCode) {
         // TODO implement here
@@ -534,82 +379,6 @@ public class VM {
     public void setItem(int code, int count, int price){
         item.setItem(code, count, price);
     }
-
-//    private void showManagingVm() {
-//        // TODO implement here
-//    }
-
-
-//    private void setup() {
-//        // TODO implement here
-//        // cli 작성부분 주석 처리
-//        System.out.println("=======Set Up========");
-//        int tmp=0;
-//        int tmp2=0;
-//        int tmp3=0;
-//        while(true){
-//            System.out.print("다른 vmId를 입력해주세요: (종료: -1)");
-//            tmp=sc.nextInt();
-//            System.out.println();
-//            if(tmp==-1){
-//                break;
-//            }
-//            item.setVmid(tmp);
-//            System.out.println("vmID: "+Integer.toString(tmp)+" setup 완료");
-//        }
-//
-//        System.out.print("매니저 ID를 입력해주세요(Int): ");
-//        tmp=sc.nextInt();
-//        item.setMid(tmp);
-//        System.out.println("매니저 ID: "+Integer.toString(tmp)+" setup 완료");
-//
-//        System.out.print("카드번호를 입력해주세요(Int): ");
-//        tmp=sc.nextInt();
-//        System.out.println();
-//        System.out.print("카드잔고를 입력해주세요(Int): ");
-//        tmp2=sc.nextInt();
-//        item.setCard(tmp,tmp2);
-//
-//        System.out.println("카드번호: "+Integer.toString(tmp)+" 카드잔고: "+Integer.toString(tmp2)+" setup완료");
-//
-//        while(true){
-//            System.out.print("음료 코드를 입력해주세요(Int): (종료: -1)");
-//            tmp=sc.nextInt();
-//            System.out.println();
-//            if(tmp==-1){
-//                break;
-//            }
-//
-//            System.out.print("음료 개수를 입력해주세요(Int): (종료: -1)");
-//            tmp2= sc.nextInt();
-//            System.out.println();
-//            if(tmp2==-1){
-//                break;
-//            }
-//
-//            System.out.print("음료 금액을 입력해주세요(Int): (종료: -1)");
-//            tmp3= sc.nextInt();
-//            System.out.println();
-//            if(tmp3==-1){
-//                break;
-//            }
-//
-//            item.setItem(tmp,tmp2,tmp3);
-//            System.out.println("음료코드: "+Integer.toString(tmp)+" 음료개수: "+Integer.toString(tmp2)+
-//                    "음료금액: "+Integer.toString(tmp3)+ " setup완료");
-//        }
-//
-//        System.out.println("Set Up을 종료합니다...");
-//
-//    }
-
-
-
-
-
-//    private void showManageStock() {
-//        // TODO implement here
-//    }
 
 
     //private -> public
