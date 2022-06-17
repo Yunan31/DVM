@@ -12,7 +12,7 @@ public class VMData {
     private String[] vmIp= {"127.0.0.1","null","null","null","our","null"};
     // ip 좌표 초기화 필요.. 근데 걍 초기화 안하고 값으로 박아버리면 안되나요
 
-    String srcId ="Team5";
+    public String srcId ="Team5";
     private int xPos = 5; //새로이 추가된 두 위아래 좌표놈들. setup에서 초기화 안해주므로 임의로 값 집어넣음.
     private int yPos = 10; //이하동문.
     //위 좌표 두개 초기화 필요

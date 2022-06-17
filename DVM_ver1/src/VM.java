@@ -69,7 +69,8 @@ public class VM {
 
                                 if(item.checkItemStock(checkCode, checkNum)){
                                     System.out.println("request StockCheckResponse start");
-                                    requestMsg("StockCheckResponse",Integer.toString(checkCode),checkNum,msg.get(j).getSrcId(),"",vmData.getXpos(),vmData.getyPos());
+                                    //requestMsg("StockCheckResponse",Integer.toString(checkCode),checkNum,msg.get(j).getSrcId(),"",vmData.getXpos(),vmData.getyPos());
+                                    onedstMsg onedstMsg = new onedstMsg(vmData, "StockCheckResponse",Integer.toString(checkCode),checkNum,msg.get(j).getSrcId(),"",vmData.getXpos(),vmData.getyPos());
                                     System.out.println("request StockCheckResponse done");
                                 }
                                 //여기여기여기여기
@@ -86,7 +87,8 @@ public class VM {
 
                                 if(item.checkItemStock(checkCode, checkNum)){
                                     System.out.println("request SalesCheckResponse start");
-                                    requestMsg("SalesCheckResponse",Integer.toString(checkCode),0,msg.get(j).getSrcId(),"",vmData.getXpos(),vmData.getyPos());
+                                    //requestMsg("SalesCheckResponse",Integer.toString(checkCode),0,msg.get(j).getSrcId(),"",vmData.getXpos(),vmData.getyPos());
+                                    onedstMsg onedstMsg = new onedstMsg(vmData, "SalesCheckResponse",Integer.toString(checkCode),0,msg.get(j).getSrcId(),"",vmData.getXpos(),vmData.getyPos());
                                     System.out.println("request SalesCheckResponse done");
                                 }
 
@@ -157,7 +159,8 @@ public class VM {
         }
 
         //System.out.println("보내는 음료 코드 :"+ String.format( "%1$02d" , code));
-        requestMsg("StockCheckRequest",String.format( "%1$02d" , code),count,"0","",vmData.getXpos(),vmData.getyPos());
+        //requestMsg("StockCheckRequest",String.format( "%1$02d" , code),count,"0","",vmData.getXpos(),vmData.getyPos());
+        broadcastMsg broadcastMsg = new broadcastMsg(vmData, "StockCheckRequest",String.format( "%1$02d" , code),count,"0","",vmData.getXpos(),vmData.getyPos());
         System.out.println("sending StockCheckResponse");
 
         //Thread.sleep(5000);
@@ -209,47 +212,47 @@ public class VM {
         return isValid;
     }   // 이거 인자 전달 잘 되는지 확인 상희 > 문제될 건 없어보임?
 
-    private void requestMsg(String type, String code, int count, String dst, String authCode, int xPos, int yPos) throws InterruptedException {
-        Message msg = new Message();
-        Message.MessageDescription msgDesc = new Message.MessageDescription();
-        Serializer msg2json = new Serializer();
-
-
-        code = String.format( "%1$02d" , Integer.parseInt(code));
-        System.out.println("바꾼 code: "+code);
-
-        msg.setSrcId(vmData.srcId); //우리 Id는 5로 고정 => 얘도 item에 저장하고 가져오는 식으로 해야하나...? (귀찮음 ㅎㅎ)
-        msg.setDstID(dst);
-
-        msg.setMsgType(type);
-        msgDesc.setItemCode(code);
-        msgDesc.setItemNum(count);
-        msgDesc.setDvmXCoord(xPos); //이것도 위와 같은 의견. setup에서 정의하지 않음. 아마 연결하기 전에 값 줄건데 그걸로 고정
-        msgDesc.setDvmYCoord(yPos); //이하동문.
-        msgDesc.setAuthCode(authCode);
-        msg.setMsgDescription(msgDesc);
-
-        String jsonMsg = msg2json.message2Json(msg); //msg=>json
-        
-        if(dst.equals("0")){
-            for(int i=0;i< vmData.getVmIpLength();i++){
-                if(vmData.getVmIp(i).equals("our")||vmData.getVmIp(i).equals("null")){
-                    continue;
-                }
-                
-                DVMClient client = new DVMClient(vmData.getVmIp(i), jsonMsg);
-                client.run();
-            }
-        }
-        else{
-
-            String tmpDst = Character.toString(dst.charAt(dst.length()-1));
-
-            System.out.println("tmpDst: "+tmpDst);
-            DVMClient client = new DVMClient(vmData.getVmIp(Integer.parseInt(tmpDst)-1), jsonMsg);
-            client.run();
-        }
-    }
+//    private void requestMsg(String type, String code, int count, String dst, String authCode, int xPos, int yPos) throws InterruptedException {
+//        Message msg = new Message();
+//        Message.MessageDescription msgDesc = new Message.MessageDescription();
+//        Serializer msg2json = new Serializer();
+//
+//
+//        code = String.format( "%1$02d" , Integer.parseInt(code));
+//        System.out.println("바꾼 code: "+code);
+//
+//        msg.setSrcId(vmData.srcId); //우리 Id는 5로 고정 => 얘도 item에 저장하고 가져오는 식으로 해야하나...? (귀찮음 ㅎㅎ)
+//        msg.setDstID(dst);
+//
+//        msg.setMsgType(type);
+//        msgDesc.setItemCode(code);
+//        msgDesc.setItemNum(count);
+//        msgDesc.setDvmXCoord(xPos); //이것도 위와 같은 의견. setup에서 정의하지 않음. 아마 연결하기 전에 값 줄건데 그걸로 고정
+//        msgDesc.setDvmYCoord(yPos); //이하동문.
+//        msgDesc.setAuthCode(authCode);
+//        msg.setMsgDescription(msgDesc);
+//
+//        String jsonMsg = msg2json.message2Json(msg); //msg=>json
+//
+//        if(dst.equals("0")){
+//            for(int i=0;i< vmData.getVmIpLength();i++){
+//                if(vmData.getVmIp(i).equals("our")||vmData.getVmIp(i).equals("null")){
+//                    continue;
+//                }
+//
+//                DVMClient client = new DVMClient(vmData.getVmIp(i), jsonMsg);
+//                client.run();
+//            }
+//        }
+//        else{
+//
+//            String tmpDst = Character.toString(dst.charAt(dst.length()-1));
+//
+//            System.out.println("tmpDst: "+tmpDst);
+//            DVMClient client = new DVMClient(vmData.getVmIp(Integer.parseInt(tmpDst)-1), jsonMsg);
+//            client.run();
+//        }
+//    }
 
     private ArrayList<Message> returnMsg(String msgType) { //msgList에서 원하는 타입의 반환값 가져오기 int code, int count, int xPos, int yPos 뺌
         //returnCountMsg에서 returnMsg로 변경, return void 에서 return ArrayList<Message>로 변경
@@ -319,7 +322,8 @@ public class VM {
         isValid = checkCard(cardNum, code, count);
         if(isValid){
             String authCode =createAuthCode();
-            requestMsg("PrepaymentCheck" ,Integer.toString(code), count,dstId,authCode,vmData.getXpos(),vmData.getyPos()); //dst
+            //requestMsg("PrepaymentCheck" ,Integer.toString(code), count,dstId,authCode,vmData.getXpos(),vmData.getyPos()); //dst
+            onedstMsg onedstMsg = new onedstMsg(vmData, "PrepaymentCheck" ,Integer.toString(code), count,dstId,authCode,vmData.getXpos(),vmData.getyPos());
             return authCode;
         }
 
