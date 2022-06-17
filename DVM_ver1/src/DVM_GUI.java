@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 //dvm_gui 하나의 클래스의 내부 프레임 함수들로 바꿈
 //dvm_gui 안에 VM 객체를 하나 만들어서 운영하는게 제일 편할듯
 //이에 따라 vm 안의 return값이 추가/변경되거나, private->public 으로 함수가 변경될 것도 생길듯
-class dvm_gui {
+class DVM_GUI {
 
     private VM vm;
     //결제에 쓰이는 음료 코드, 개수
@@ -15,7 +15,7 @@ class dvm_gui {
     private int[] position = new int[2];
 
 
-    dvm_gui(){
+    DVM_GUI(){
         vm = new VM();
         try {
             setUp();
@@ -135,7 +135,7 @@ class dvm_gui {
         checkEFG.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int checkItemInputs = setUp_tf[3].getText().length() * setUp_tf[4].getText().length() * setUp_tf[6].getText().length();
+                int checkItemInputs = setUp_tf[3].getText().length() * setUp_tf[4].getText().length() * setUp_tf[5].getText().length();
                 if(checkItemInputs!=0)
                     vm.setItem(
                             Integer.parseInt(setUp_tf[3].getText()),
@@ -733,12 +733,16 @@ class dvm_gui {
         frame.setSize(500,500);
         frame.setLayout(null);
 
+        Observer observer = new ItemObserver();
+        vm.item.addObserver(observer);
+
         JButton manageVm_stock_btn = new JButton("Manage Stock");
         manageVm_stock_btn.setBounds(150,100,200,100);
         manageVm_stock_btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 manageStock();
+                vm.item.deleteObserver(observer);
                 frame.dispose();
             }
         });
@@ -754,6 +758,7 @@ class dvm_gui {
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
+                vm.item.deleteObserver(observer);
                 frame.dispose();
             }
         });
@@ -763,6 +768,7 @@ class dvm_gui {
             @Override
             public void actionPerformed(ActionEvent e) {
                 selectMode();
+                vm.item.deleteObserver(observer);
                 frame.dispose();
             }
         });
@@ -777,6 +783,9 @@ class dvm_gui {
     }
 
     public void manageStock(){
+        Observer observer = new ItemObserver();
+        vm.item.addObserver(observer);
+
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setResizable(false);
@@ -816,6 +825,7 @@ class dvm_gui {
             @Override
             public void actionPerformed(ActionEvent e) {
                 selectMode();
+                vm.item.deleteObserver(observer);
                 frame.dispose();
             }
         });

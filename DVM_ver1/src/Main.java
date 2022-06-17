@@ -1,18 +1,11 @@
-import DVM_Client.DVMClient;
 import DVM_Server.DVMServer;
-import GsonConverter.Serializer;
-import Model.Message;
-
-import java.util.ArrayList;
-
-import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 public class Main {
     static DVMServer server;
     public static void main(String[] args) throws InterruptedException {
 
         //GUI 테스트 부분
-        dvm_gui d = new dvm_gui();
+        DVM_GUI d = new DVM_GUI();
 
         System.out.println("wait ... Thread2 ");
         Thread1 thread = new Thread1();

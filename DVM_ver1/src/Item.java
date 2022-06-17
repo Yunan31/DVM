@@ -4,7 +4,7 @@ import java.util.*;
 /**
  *
  */
-public class Item {
+public class Item implements Subject {
 
     /**
      * Default constructor
@@ -13,6 +13,7 @@ public class Item {
 
     }
 
+    private ArrayList<ItemObserver> observers = new ArrayList<>();
     private List<Integer> vmid = new ArrayList<>(); //int [] => list<int>로 형변환
     private int mid;
 
@@ -69,6 +70,7 @@ public class Item {
         int tmpCount = itemCount[code];
         tmpCount -= count;
         itemCount[code]= tmpCount;
+        notifyItem(code, itemCount[code]);
     }
 
     public void update(int code, int count) { //위의 updateItemStock은 ItemOut의 느낌, 얘는 매니징할때 추가하는것. (사실 두개 구분 안해도 됨)
@@ -76,5 +78,22 @@ public class Item {
         System.out.print("code: "+Integer.toString(code)+" count:" +Integer.toString(count)+"만큼 추가하였습니다.");
         itemCount[code]=count;
         //여기선 setup값으로 받아오기 때문에 증감이 아닌 대체.
+    }
+
+    @Override
+    public void addObserver(Observer observer) {
+        observers.add((ItemObserver) observer);
+    }
+
+    @Override
+    public void deleteObserver(Observer observer) {
+        observers.remove((ItemObserver) observer);
+    }
+
+    @Override
+    public void notifyItem(int code, int count) {
+        for(ItemObserver o : observers){
+            o.update(code, count);
+        }
     }
 }
