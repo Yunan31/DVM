@@ -33,11 +33,11 @@ class DVM_GUI {
         frame.setSize(500,500);
         frame.setLayout(new GridLayout(0,3));
 
-        JButton selectMode_item_btn = new JButton("음료 선택");
-        JButton selectMode_prepay_btn = new JButton("선결제 수령");
-        JButton selectMode_manager_btn = new JButton("매니저");
+        JButton btnItem = new JButton("음료 선택");
+        JButton btnPrepay = new JButton("선결제 수령");
+        JButton btnManager = new JButton("매니저");
 
-        selectMode_item_btn.addActionListener(new ActionListener() { //음료 선택
+        btnItem.addActionListener(new ActionListener() { //음료 선택
             @Override
             public void actionPerformed(ActionEvent e) {
                 selectItem();
@@ -45,7 +45,7 @@ class DVM_GUI {
             }
         });
 
-        selectMode_prepay_btn.addActionListener(new ActionListener() { //선결제 수령
+        btnPrepay.addActionListener(new ActionListener() { //선결제 수령
             @Override
             public void actionPerformed(ActionEvent e) {
                 readPrepayAuthCode();
@@ -53,7 +53,7 @@ class DVM_GUI {
             }
         });
 
-        selectMode_manager_btn.addActionListener(new ActionListener() { //매니져 접근
+        btnManager.addActionListener(new ActionListener() { //매니져 접근
             @Override
             public void actionPerformed(ActionEvent e) {
                 readManagerAuthCode();
@@ -61,9 +61,9 @@ class DVM_GUI {
             }
         });
 
-        frame.add(selectMode_item_btn);
-        frame.add(selectMode_prepay_btn);
-        frame.add(selectMode_manager_btn);
+        frame.add(btnItem);
+        frame.add(btnPrepay);
+        frame.add(btnManager);
 
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

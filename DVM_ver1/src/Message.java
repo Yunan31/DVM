@@ -1,7 +1,6 @@
 import GsonConverter.Serializer;
-import Model.Message;
 
-public abstract class requestMsg {
+public abstract class Message {
     public VMData vmData;
     public String type;
     public String code;
@@ -11,7 +10,7 @@ public abstract class requestMsg {
     public int xPos;
     public int yPos;
 
-    requestMsg(VMData vmData, String type, String code, int count, String dst, String authCode, int xPos, int yPos){
+    Message(VMData vmData, String type, String code, int count, String dst, String authCode, int xPos, int yPos){
         this.vmData = vmData;
         this.type = type;
         this.code = code;
@@ -29,8 +28,8 @@ public abstract class requestMsg {
     }
 
     private String setMsgDescription() {
-        Message msg = new Message();
-        Message.MessageDescription msgDesc = new Message.MessageDescription();
+        Model.Message msg = new Model.Message();
+        Model.Message.MessageDescription msgDesc = new Model.Message.MessageDescription();
         Serializer msg2json = new Serializer();
 
 

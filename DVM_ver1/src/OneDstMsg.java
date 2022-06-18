@@ -1,7 +1,7 @@
 import DVM_Client.DVMClient;
 
-public class onedstMsg extends requestMsg{
-    onedstMsg(VMData vmData, String type, String code, int count, String dst, String authCode, int xPos, int yPos) {
+public class OneDstMsg extends Message {
+    OneDstMsg(VMData vmData, String type, String code, int count, String dst, String authCode, int xPos, int yPos) {
         super(vmData, type, code, count, dst, authCode, xPos, yPos);
     }
 

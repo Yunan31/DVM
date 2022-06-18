@@ -9,7 +9,7 @@ public class VMData {
 
     //"192.168.66.176","192,168.67.11","192.168.67.30","192.168.65.204","our","192.168.64.242"
     //192.168.157.16
-    private String[] vmIp= {"127.0.0.1","null","null","null","our","null"};
+    private String[] vmIp= {"null","null","null","null","our","null"};
     // ip 좌표 초기화 필요.. 근데 걍 초기화 안하고 값으로 박아버리면 안되나요
 
     public String srcId ="Team5";

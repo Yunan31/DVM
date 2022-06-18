@@ -24,12 +24,7 @@ public class AuthcodeData {
             return false;
         }
 
-        String code_count = this.authCode.get(authCode);
-        int code = Integer.parseInt(code_count.split(" ")[0]);
-        int count = Integer.parseInt(code_count.split(" ")[1]);
-
-        //원래 여기 ItemOut이 있어서 code count값이 필요한데 없어서 필요가 없어짐 ㅋㅋ
-        //그리고 이미 InsertCode에서 updateItemStock으로 재고를 줄여준 상태임. 또 줄이면 안됨.
+        //이미 InsertCode에서 updateItemStock으로 재고를 줄여준 상태임. 또 줄이면 안됨.
 
         deleteAuthCode(authCode);
 

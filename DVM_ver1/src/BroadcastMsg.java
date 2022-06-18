@@ -1,8 +1,8 @@
 import DVM_Client.DVMClient;
 
-public class broadcastMsg extends requestMsg{
+public class BroadcastMsg extends Message {
 
-    broadcastMsg(VMData vmData, String type, String code, int count, String dst, String authCode, int xPos, int yPos) {
+    BroadcastMsg(VMData vmData, String type, String code, int count, String dst, String authCode, int xPos, int yPos) {
         super(vmData, type, code, count, dst, authCode, xPos, yPos);
     }
 

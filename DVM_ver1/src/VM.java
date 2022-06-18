@@ -1,11 +1,8 @@
-import DVM_Client.DVMClient;
 import DVM_Server.DVMServer;
-import GsonConverter.Serializer;
 import Model.Message;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 
 public class VM {
 
@@ -13,7 +10,6 @@ public class VM {
     CardData cardData = new CardData();
     AuthcodeData authcode = new AuthcodeData();
     VMData vmData = new VMData();
-    Scanner sc = new Scanner(System.in);
 
     /**
      * Default constructor
@@ -21,7 +17,6 @@ public class VM {
     public VM() {
         isValid = false;
         position = new int[2];
-        isNone = false;
 
         Thread2 thread = new Thread2();
         thread.start();
@@ -36,7 +31,6 @@ public class VM {
 
     private boolean isValid;
     private int position[];
-    private boolean isNone;
     //"192.168.66.176","192,168.67.11","192.168.67.30","192.168.65.204","our","192.168.64.242"
     //private String authCode;
     /*
@@ -67,10 +61,10 @@ public class VM {
                                 int checkCode = Integer.parseInt(msg.get(j).getMsgDescription().getItemCode());
                                 int checkNum = msg.get(j).getMsgDescription().getItemNum();
 
-                                if(item.checkItemStock(checkCode, checkNum)){
+                                if(item.item_checkItemStock(checkCode, checkNum)){
                                     System.out.println("request StockCheckResponse start");
                                     //requestMsg("StockCheckResponse",Integer.toString(checkCode),checkNum,msg.get(j).getSrcId(),"",vmData.getXpos(),vmData.getyPos());
-                                    onedstMsg onedstMsg = new onedstMsg(vmData, "StockCheckResponse",Integer.toString(checkCode),checkNum,msg.get(j).getSrcId(),"",vmData.getXpos(),vmData.getyPos());
+                                    new OneDstMsg(vmData, "StockCheckResponse",Integer.toString(checkCode),checkNum,msg.get(j).getSrcId(),"",vmData.getXpos(),vmData.getyPos());
                                     System.out.println("request StockCheckResponse done");
                                 }
                                 //여기여기여기여기
@@ -85,10 +79,10 @@ public class VM {
                                 int checkCode = Integer.parseInt(msg.get(j).getMsgDescription().getItemCode());
                                 int checkNum = msg.get(j).getMsgDescription().getItemNum();
 
-                                if(item.checkItemStock(checkCode, checkNum)){
+                                if(item.item_checkItemStock(checkCode, checkNum)){
                                     System.out.println("request SalesCheckResponse start");
                                     //requestMsg("SalesCheckResponse",Integer.toString(checkCode),0,msg.get(j).getSrcId(),"",vmData.getXpos(),vmData.getyPos());
-                                    onedstMsg onedstMsg = new onedstMsg(vmData, "SalesCheckResponse",Integer.toString(checkCode),0,msg.get(j).getSrcId(),"",vmData.getXpos(),vmData.getyPos());
+                                    new OneDstMsg(vmData, "SalesCheckResponse",Integer.toString(checkCode),0,msg.get(j).getSrcId(),"",vmData.getXpos(),vmData.getyPos());
                                     System.out.println("request SalesCheckResponse done");
                                 }
 
@@ -154,21 +148,18 @@ public class VM {
     private String checkItemStock(int code, int count) throws InterruptedException { //
         // TODO implement here
 
-        if(item.checkItemStock(code,count)){
+        if(item.item_checkItemStock(code,count)){
             return "our"; //우리꺼에서 체크
         }
 
         //System.out.println("보내는 음료 코드 :"+ String.format( "%1$02d" , code));
         //requestMsg("StockCheckRequest",String.format( "%1$02d" , code),count,"0","",vmData.getXpos(),vmData.getyPos());
-        broadcastMsg broadcastMsg = new broadcastMsg(vmData, "StockCheckRequest",String.format( "%1$02d" , code),count,"0","",vmData.getXpos(),vmData.getyPos());
+        new BroadcastMsg(vmData, "StockCheckRequest",String.format( "%1$02d" , code),count,"0","",vmData.getXpos(),vmData.getyPos());
         System.out.println("sending StockCheckResponse");
 
-        //Thread.sleep(5000);
+        Thread.sleep(2000);
         ArrayList<Message> msg = new ArrayList<>();
 
-        for(int i=0;i<1000000;i++){
-
-        }
 
         for(int i=0;i<5;i++){
             Thread.sleep(1000);
@@ -189,19 +180,6 @@ public class VM {
 
         return dstId; //남에꺼 체크
     }
-
-    //private -> public
-    //void -> int[]
-    //인자 없앰 (int xPos, yPos)
-    //메세지 안에서 실행해줘야할듯
-//    public int[] guideOtherMachine() {
-//        // TODO implement here
-//        int[] pos = new int[2];
-//        //테스트
-//        pos[0] = 1; pos[1] = 2;
-//        return pos;
-//    }
-
 
     //private -> public
     //return void -> boolean(isValid)
@@ -323,7 +301,7 @@ public class VM {
         if(isValid){
             String authCode =createAuthCode();
             //requestMsg("PrepaymentCheck" ,Integer.toString(code), count,dstId,authCode,vmData.getXpos(),vmData.getyPos()); //dst
-            onedstMsg onedstMsg = new onedstMsg(vmData, "PrepaymentCheck" ,Integer.toString(code), count,dstId,authCode,vmData.getXpos(),vmData.getyPos());
+            new OneDstMsg(vmData, "PrepaymentCheck" ,Integer.toString(code), count,dstId,authCode,vmData.getXpos(),vmData.getyPos());
             return authCode;
         }
 

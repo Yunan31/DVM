@@ -14,20 +14,15 @@ public class Item implements Subject {
     }
 
     private ArrayList<ItemObserver> observers = new ArrayList<>();
-    private List<Integer> vmid = new ArrayList<>(); //int [] => list<int>로 형변환
     private int mid;
 
     private int itemCount[]= new int[21]; //기본 int item[]을 사이즈 20으로 고정 선언, 변수명 변경 (itemPrice에 맞춰서 item => itemCount로)
     private int itemPrice[] = new int[21]; //아예 새로 추가한 항목임, 음료 코드랑 개수는 고려했지만 가격을 고려하지 못해서 추가함.
                                            //이건 그냥 선언과 동시에 초기화 해도 될듯함. (사용자 입력으로 받을 필요성을 느끼지 못함)
-    private HashMap<String,String> authCode = new HashMap<>(); //기존의 Integer, String에서 String, String으로 변환
+                                            //기존의 Integer, String에서 String, String으로 변환
                                              //앞의 String에 authCode가 들어가고 뒤의 String엔 "음료코드 개수" 형식으로 띄어쓰기해서
                                              //들어갈 예정. split 사용해서 쓰면 됨.
                                              //즉 authcode를 키값으로 찾을것임.
-
-    public List<Integer> getVMId(){ //msgRequest에 쓰이므로 get추가.
-        return this.vmid;
-    }
 
     public int getMid() { return this.mid; }
 
@@ -51,7 +46,7 @@ public class Item implements Subject {
         return itemCount[code];
     }
 
-    public boolean checkItemStock(int code, int count) {
+    public boolean item_checkItemStock(int code, int count) {
         // TODO implement here
         System.out.print("code: "+Integer.toString(code)+" count:" +Integer.toString(count));
         if(itemCount[code]>=count){ //재고 확인해서 주문수량 보다 크거나 같으면 true return
